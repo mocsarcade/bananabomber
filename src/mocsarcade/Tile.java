@@ -1,5 +1,7 @@
 package mocsarcade;
 
+import java.awt.Rectangle;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
@@ -10,12 +12,19 @@ public abstract class Tile
 	protected Color color;
 	protected Bomb bomb;
 	protected Explosion explosion;
+	protected Rectangle rectangle;
 	
 	public Tile(GameMap gamemap, int tx, int ty)
 	{
 		this.gamemap = gamemap;
 		this.tx = tx;
 		this.ty = ty;
+
+		int x = this.getX();
+		int y = this.getY();
+		int width = this.getWidth();
+		int height = this.getHeight();
+		this.rectangle = new Rectangle(x, y, width, height); 
 	}
 	
 	public void update(int delta)
@@ -87,6 +96,11 @@ public abstract class Tile
 		return Tile.SIZE;
 	}
 	
+	public Rectangle getRectangle()
+	{
+		return this.rectangle;
+	}
+	
 	public void addBomb(Bomb bomb)
 	{
 		this.bomb = bomb;
@@ -130,6 +144,14 @@ public abstract class Tile
 				if(direction == Direction.EAST || direction == Direction.ALL)
 				{
 					this.gamemap.getTile(this.tx + 1, this.ty).explode(Direction.EAST, power - 1);
+				}
+				
+				for(Monkey monkey : this.gamemap.getMonkies())
+				{
+					if(monkey.getRectangle().intersects(this.getRectangle()))
+					{
+						this.gamemap.removeMonkey(monkey);
+					}
 				}
 			}
 		}

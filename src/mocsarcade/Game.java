@@ -8,18 +8,16 @@ import org.newdawn.slick.SlickException;
 
 public class Game extends BasicGame
 {
+	GameMap gamemap;
+	
 	public Game()
 	{
 		super(Game.TITLE + " " + Game.VERSION);
 	}
 	
-	Monkey monkey;
-	GameMap gamemap;
-	
 	public void init(GameContainer container) throws SlickException
 	{
-		this.gamemap = new GameMap();
-		this.monkey = new Monkey(this.gamemap);
+		this.gamemap = new GameMap(this);
 	}
 	
 	public void update(GameContainer container, int delta) throws SlickException
@@ -31,14 +29,24 @@ public class Game extends BasicGame
 			System.exit(0);
 		}
 		
-		this.monkey.update(input, delta);
-		this.gamemap.update(delta);
+		this.gamemap.update(input, delta);
 	}
 	
 	public void render(GameContainer container, Graphics graphics) throws SlickException
 	{
 		this.gamemap.render(graphics);
-		this.monkey.render(graphics);
+	}
+	
+	public void reset()
+	{
+		try
+		{
+			this.gamemap = new GameMap(this);
+		}
+		catch(SlickException exception)
+		{
+			exception.printStackTrace();
+		}
 	}
 	
 	public static void main(String[] args) throws SlickException

@@ -1,5 +1,7 @@
 package mocsarcade;
 
+import java.awt.Rectangle;
+
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.Graphics;
@@ -73,10 +75,20 @@ public class Monkey
 	
 	public void render(Graphics graphics)
 	{
-		float x = this.x - this.getHalfWidth();
-		float y = this.y - this.getHalfHeight();
+		float x = this.getX() - this.getHalfWidth();
+		float y = this.getY() - this.getHalfHeight();
 		
 		this.image.draw(x, y);
+	}
+	
+	public float getX()
+	{
+		return this.x;
+	}
+	
+	public float getY()
+	{
+		return this.y;
 	}
 	
 	public int getWidth()
@@ -97,5 +109,15 @@ public class Monkey
 	public int getHalfHeight()
 	{
 		return this.getHeight() / 2;
+	}
+	
+	public Rectangle getRectangle()
+	{
+		int x = (int)(this.getX() - this.getHalfWidth());
+		int y = (int)(this.getY() - this.getHalfHeight());
+		int width = this.getWidth();
+		int height = this.getHeight();
+		
+		return new Rectangle(x, y, width, height);
 	}
 }
