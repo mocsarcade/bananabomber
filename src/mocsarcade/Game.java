@@ -17,8 +17,8 @@ public class Game extends BasicGame
 	
 	public void init(GameContainer container) throws SlickException
 	{
-		this.monkey = new Monkey();
 		this.gamemap = new Gamemap();
+		this.monkey = new Monkey(this.gamemap);
 	}
 	
 	public void update(GameContainer container, int delta) throws SlickException
@@ -40,8 +40,8 @@ public class Game extends BasicGame
 		container.start();
 	}
 	
-	public static final int WIDTH = 1600 / 2;
-	public static final int HEIGHT = 900 / 2;
+	public static final int WIDTH = 800;
+	public static final int HEIGHT = 600;
 	public static final String VERSION = "v0.0.1";
 	public static final String TITLE = "Bananabomber";
 }

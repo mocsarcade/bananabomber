@@ -6,40 +6,62 @@ import org.newdawn.slick.SlickException;
 
 public class Monkey
 {
-	private float x, y; 
+	private float x, y;
+	private float speed;
 	private Image image;
-	private float speed = 0.25f;
+	private Gamemap gamemap;
 	
-	public Monkey() throws SlickException
+	public Monkey(Gamemap gamemap) throws SlickException
 	{
-		image = new Image("./res/monkey.png");
+		this.x = 64;
+		this.y = 64;
+		this.speed = 0.25f;
+		
+		this.gamemap = gamemap;
+		this.image = new Image("./res/monkey.png");
 	}
 	
 	public void update(Input input, int delta)
 	{
+		float step = this.speed * delta;
+		
 		if(input.isKeyDown(Input.KEY_UP))
 		{
-			this.y -= this.speed * delta;
+			if(this.gamemap.isNotBlocked(this.x, this.y - step))
+			{
+				this.y -= step;
+			}
 		}
-		else if(input.isKeyDown(Input.KEY_DOWN))
+		
+		if(input.isKeyDown(Input.KEY_DOWN))
 		{
-			this.y += this.speed * delta;
+			if(this.gamemap.isNotBlocked(this.x, this.y + step))
+			{
+				this.y += step;
+			}
 		}
 
 		if(input.isKeyDown(Input.KEY_LEFT))
 		{
-			this.x -= this.speed * delta;
+			if(this.gamemap.isNotBlocked(this.x - step, this.y))
+			{
+				this.x -= step;
+			}
 		}
-		else if(input.isKeyDown(Input.KEY_RIGHT))
+		
+		if(input.isKeyDown(Input.KEY_RIGHT))
 		{
-			this.x += this.speed * delta;
+			if(this.gamemap.isNotBlocked(this.x + step, this.y))
+			{
+				this.x += step;
+			}
 		}
 	}
 	
 	public void render()
 	{
-		float x = this.x + this.getHalfWidth();
-		float y = this.y + this.getHalfHeight();
+		float x = this.x - this.getHalfWidth();
+		float y = this.y - this.getHalfHeight();
 		
 		this.image.draw(x, y);
 	}
