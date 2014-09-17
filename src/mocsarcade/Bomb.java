@@ -9,9 +9,11 @@ public class Bomb
 	private int timer;
 	private Direction direction;
 	private int power;
+	private Monkey monkey;
 	
-	public Bomb(Tile tile, int power)
+	public Bomb(Tile tile, int power, Monkey monkey)
 	{
+		this.monkey = monkey;
 		this.tile = tile;
 		this.timer = 3 * 1000;
 		this.direction = Direction.ALL;
@@ -24,7 +26,7 @@ public class Bomb
 		
 		if(this.timer < 0)
 		{
-			this.tile.explode(this.direction, this.power, true);
+			this.explode();
 		}
 	}
 	
@@ -38,5 +40,12 @@ public class Bomb
 		
 		graphics.setColor(color);
 		graphics.fillOval(x, y, width, height);
+	}
+	
+	public void explode()
+	{
+		this.monkey.bombcount += 1;
+		this.tile.bomb = null;
+		this.tile.explode(this.direction, this.power, true);
 	}
 }

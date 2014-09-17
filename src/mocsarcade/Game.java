@@ -3,6 +3,7 @@ import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
@@ -18,6 +19,9 @@ public class Game extends BasicGame
 	public void init(GameContainer container) throws SlickException
 	{
 		this.gamemap = new GameMap(this);
+
+		Powerup.POWER_IMAGE = new Image("./res/power.banana.png");
+		Powerup.AMOUNT_IMAGE = new Image("./res/amount.banana.png");
 	}
 	
 	public void update(GameContainer container, int delta) throws SlickException
@@ -59,7 +63,7 @@ public class Game extends BasicGame
 		AppGameContainer container = new AppGameContainer(new Game());
 		container.setDisplayMode(Game.WIDTH, Game.HEIGHT, false);
 		//container.setTargetFrameRate(60);
-		//container.setFullscreen(true);
+		container.setFullscreen(true);
 		container.start();
 	}
 	

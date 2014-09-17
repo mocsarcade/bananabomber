@@ -14,9 +14,10 @@ public class Monkey
 	private float speed;
 	private Image image;
 	private GameMap gamemap;
-	private int power;
+	public int power;
 	private String color;
 	private KeyScheme keyscheme;
+	public int bombcount;
 	
 	public Monkey(GameMap gamemap, String color) throws SlickException
 	{
@@ -28,7 +29,8 @@ public class Monkey
 		this.gamemap.getTile(this.x, this.y).explode(Direction.ALL, 2, false);
 		this.gamemap.getTile(this.x, this.y).explode(Direction.ALL, 2, false);
 		this.speed = 0.25f;
-		this.power = 3;
+		this.power = 2;
+		this.bombcount = 1;
 		this.image = new Image("./res/" + this.color + ".monkey.png");
 		this.keyscheme = new KeyScheme(this.color);
 	}
@@ -79,7 +81,11 @@ public class Monkey
 			
 			if(!tile.hasBomb())
 			{
-				tile.addBomb(new Bomb(tile, this.power));
+				if(this.bombcount > 0)
+				{
+					tile.addBomb(new Bomb(tile, this.power, this));
+					this.bombcount -= 1;
+				}
 			}
 		}
 	}
@@ -100,6 +106,16 @@ public class Monkey
 	public float getY()
 	{
 		return this.y;
+	}
+
+	public int getTileyX()
+	{
+		return (int)(Math.floor(this.getX() / Tile.WIDTH)); 
+	}
+
+	public int getTileyY()
+	{
+		return (int)(Math.floor(this.getY() / Tile.HEIGHT)); 
 	}
 	
 	public int getWidth()

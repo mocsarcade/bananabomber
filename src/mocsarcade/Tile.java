@@ -1,6 +1,7 @@
 package mocsarcade;
 
 import java.awt.Rectangle;
+import java.util.Random;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -14,6 +15,7 @@ public abstract class Tile
 	protected Crate crate;
 	protected Explosion explosion;
 	protected Rectangle rectangle;
+	public Powerup powerup;
 	
 	public Tile(GameMap gamemap, int tx, int ty)
 	{
@@ -44,6 +46,11 @@ public abstract class Tile
 				this.explosion = null;
 			}
 		}
+		
+		if(this.powerup != null)
+		{
+			this.powerup.update(delta);
+		}
 	}
 	
 	public void render(Graphics graphics)
@@ -64,6 +71,11 @@ public abstract class Tile
 		if(this.crate != null)
 		{
 			this.crate.render(graphics);
+		}
+		
+		if(this.powerup != null)
+		{
+			this.powerup.render(graphics);
 		}
 		
 		if(this.explosion != null)
@@ -143,14 +155,22 @@ public abstract class Tile
 				
 				if(this.bomb != null)
 				{
+					this.bomb.explode();
 					this.bomb = null;
-					//also explode that bomb!!
 				}
 				
 				if(this.crate != null)
 				{
 					this.crate = null;
 					power = 0;
+					
+					if(active)
+					{
+						if(new Random().nextInt(10) <= 3)
+						{
+							this.powerup = new Powerup(this);
+						}
+					}
 				}
 				
 				if(direction == Direction.NORTH || direction == Direction.ALL)
