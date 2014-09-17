@@ -12,6 +12,25 @@ public class Game extends BasicGame
 		super(Game.TITLE + " " + Game.VERSION);
 	}
 	
+	Monkey monkey;
+	Gamemap gamemap;
+	
+	public void init(GameContainer container) throws SlickException
+	{
+		this.monkey = new Monkey();
+		this.gamemap = new Gamemap();
+	}
+	
+	public void update(GameContainer container, int delta) throws SlickException
+	{
+		this.monkey.update(container.getInput(), delta);
+	}
+	
+	public void render(GameContainer container, Graphics graphics) throws SlickException
+	{
+		this.monkey.render();
+	}
+	
 	public static void main(String[] args) throws SlickException
 	{
 		AppGameContainer container = new AppGameContainer(new Game());
@@ -20,24 +39,9 @@ public class Game extends BasicGame
 		//container.setFullscreen(true);
 		container.start();
 	}
-
-	public static final int WIDTH = 1600 / 3;
-	public static final int HEIGHT = 900 / 3;
+	
+	public static final int WIDTH = 1600 / 2;
+	public static final int HEIGHT = 900 / 2;
 	public static final String VERSION = "v0.0.1";
 	public static final String TITLE = "Bananabomber";
-	
-	public void init(GameContainer container) throws SlickException
-	{
-		
-	}
-	
-	public void update(GameContainer container, int delta) throws SlickException
-	{
-		
-	}
-	
-	public void render(GameContainer container, Graphics graphics) throws SlickException
-	{
-		
-	}
 }
