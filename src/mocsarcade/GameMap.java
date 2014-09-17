@@ -11,8 +11,8 @@ public class GameMap
 {
 	private Game game;
 	
-	private static int TILEY_WIDTH = Game.WIDTH / Tile.SIZE;
-	private static int TILEY_HEIGHT = Game.HEIGHT / Tile.SIZE;
+	private static int TILEY_WIDTH = Game.WIDTH / Tile.WIDTH;
+	private static int TILEY_HEIGHT = Game.HEIGHT / Tile.HEIGHT;
 	
 	private Tile[][] tiles = new Tile[GameMap.TILEY_WIDTH][GameMap.TILEY_HEIGHT];
 	private LinkedList<Monkey> monkies = new LinkedList<Monkey>();
@@ -114,8 +114,8 @@ public class GameMap
 	
 	public Tile getTile(float x, float y)
 	{
-		int tx = (int)(Math.floor(x / Tile.SIZE));
-		int ty = (int)(Math.floor(y / Tile.SIZE));
+		int tx = (int)(Math.floor(x / Tile.WIDTH));
+		int ty = (int)(Math.floor(y / Tile.HEIGHT));
 		
 		return this.tiles[tx][ty];
 	}

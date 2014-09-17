@@ -88,12 +88,12 @@ public abstract class Tile
 	
 	public int getWidth()
 	{
-		return Tile.SIZE;
+		return Tile.WIDTH;
 	}
 	
 	public int getHeight()
 	{
-		return Tile.SIZE;
+		return Tile.HEIGHT;
 	}
 	
 	public Rectangle getRectangle()
@@ -159,6 +159,7 @@ public abstract class Tile
 	
 	public abstract boolean isPassable();
 	public abstract boolean canExplode();
-	
-	public static final int SIZE = 40;
+
+	public static final int WIDTH = 40;
+	public static final int HEIGHT = 40;
 }
