@@ -11,6 +11,7 @@ public abstract class Tile
 	protected int tx, ty;
 	protected Color color;
 	protected Bomb bomb;
+	protected Crate crate;
 	protected Explosion explosion;
 	protected Rectangle rectangle;
 	
@@ -58,6 +59,11 @@ public abstract class Tile
 		if(this.bomb != null)
 		{
 			this.bomb.render(graphics);
+		}
+		
+		if(this.crate != null)
+		{
+			this.crate.render(graphics);
 		}
 		
 		if(this.explosion != null)
@@ -116,42 +122,52 @@ public abstract class Tile
 		this.bomb = null;
 	}
 
-	public void explode(Direction direction, int power)
+	public void explode(Direction direction, int power, boolean active)
 	{
 		if(power > 0)
 		{
 			if(this.canExplode())
 			{
-				this.explosion = new Explosion(this, power);
-				
-				if(this.hasBomb())
+				if(active)
 				{
-					this.removeBomb();
+					this.explosion = new Explosion(this, power);
+					
+					for(Monkey monkey : this.gamemap.getMonkies())
+					{
+						if(monkey.getRectangle().intersects(this.getRectangle()))
+						{
+							this.gamemap.removeMonkey(monkey);
+						}
+					}
+				}
+				
+				if(this.bomb != null)
+				{
+					this.bomb = null;
+					//also explode that bomb!!
+				}
+				
+				if(this.crate != null)
+				{
+					this.crate = null;
+					power = 0;
 				}
 				
 				if(direction == Direction.NORTH || direction == Direction.ALL)
 				{
-					this.gamemap.getTile(this.tx, this.ty - 1).explode(Direction.NORTH, power - 1);
+					this.gamemap.getTile(this.tx, this.ty - 1).explode(Direction.NORTH, power - 1, active);
 				}
 				if(direction == Direction.SOUTH || direction == Direction.ALL)
 				{
-					this.gamemap.getTile(this.tx, this.ty + 1).explode(Direction.SOUTH, power - 1);
+					this.gamemap.getTile(this.tx, this.ty + 1).explode(Direction.SOUTH, power - 1, active);
 				}
 				if(direction == Direction.WEST || direction == Direction.ALL)
 				{
-					this.gamemap.getTile(this.tx - 1, this.ty).explode(Direction.WEST, power - 1);
+					this.gamemap.getTile(this.tx - 1, this.ty).explode(Direction.WEST, power - 1, active);
 				}
 				if(direction == Direction.EAST || direction == Direction.ALL)
 				{
-					this.gamemap.getTile(this.tx + 1, this.ty).explode(Direction.EAST, power - 1);
-				}
-				
-				for(Monkey monkey : this.gamemap.getMonkies())
-				{
-					if(monkey.getRectangle().intersects(this.getRectangle()))
-					{
-						this.gamemap.removeMonkey(monkey);
-					}
+					this.gamemap.getTile(this.tx + 1, this.ty).explode(Direction.EAST, power - 1, active);
 				}
 			}
 		}

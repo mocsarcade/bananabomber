@@ -29,6 +29,11 @@ public class Game extends BasicGame
 			System.exit(0);
 		}
 		
+		if(input.isKeyDown(Input.KEY_R))
+		{
+			this.reset();
+		}
+		
 		this.gamemap.update(input, delta);
 	}
 	

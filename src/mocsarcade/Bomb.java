@@ -24,7 +24,7 @@ public class Bomb
 		
 		if(this.timer < 0)
 		{
-			this.tile.explode(this.direction, this.power);
+			this.tile.explode(this.direction, this.power, true);
 		}
 	}
 	

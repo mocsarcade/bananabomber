@@ -23,11 +23,10 @@ public class Monkey
 		this.gamemap = gamemap;
 		this.color = color;
 		Random random = new Random();
-		//this.x = (random.nextInt(9) * 2) * Tile.WIDTH - (Tile.WIDTH * 0.5f);
-		//this.y = (random.nextInt(9) * 2) * Tile.HEIGHT - (Tile.HEIGHT * 0.5f);
-		//this.gamemap.getTile(this.x, this.y).explode(Direction.ALL, 2);
-		this.x = 64;
-		this.y = 64;
+		this.x = (random.nextInt(9) + 1) * Tile.WIDTH * 2 - (Tile.WIDTH * 0.5f);
+		this.y = (random.nextInt(7) + 1) * Tile.WIDTH * 2 - (Tile.WIDTH * 0.5f);
+		this.gamemap.getTile(this.x, this.y).explode(Direction.ALL, 2, false);
+		this.gamemap.getTile(this.x, this.y).explode(Direction.ALL, 2, false);
 		this.speed = 0.25f;
 		this.power = 3;
 		this.image = new Image("./res/" + this.color + ".monkey.png");
