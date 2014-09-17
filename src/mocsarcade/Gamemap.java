@@ -2,6 +2,7 @@ package mocsarcade;
 
 import java.util.LinkedList;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
@@ -15,6 +16,9 @@ public class GameMap
 	
 	private Tile[][] tiles = new Tile[GameMap.TILEY_WIDTH][GameMap.TILEY_HEIGHT];
 	private LinkedList<Monkey> monkies = new LinkedList<Monkey>();
+
+	private int gameoverTimer;
+	private String gameoverMessage;
 	
 	public GameMap(Game game) throws SlickException
 	{
@@ -55,6 +59,30 @@ public class GameMap
 		{
 			monkey.update(input, delta);
 		}
+		
+		if(this.gameoverMessage != null)
+		{
+			this.gameoverTimer -= delta;
+			System.out.println(gameoverMessage);
+			
+			if(this.gameoverTimer <= 0)
+			{
+				this.game.reset();
+			}
+		}
+		else
+		{
+			if(this.monkies.size() == 0)
+			{
+				this.gameoverTimer = 3 * 1000;
+				this.gameoverMessage = "Everyone loses!";
+			}
+			else if(this.monkies.size() == 1)
+			{
+				this.gameoverTimer = 3 * 1000;
+				this.gameoverMessage = this.monkies.get(0).getColor() + " wins!";
+			}
+		}
 	}
 	
 	public void render(Graphics graphics)
@@ -71,11 +99,12 @@ public class GameMap
 		{
 			monkey.render(graphics);
 		}
-	}
-	
-	public void reset()
-	{
-		this.game.reset();
+		
+		if(this.gameoverMessage != null)
+		{
+			graphics.setColor(Color.white);
+			graphics.drawString(this.gameoverMessage, 48, Game.HEIGHT - 28);
+		}
 	}
 	
 	public Tile getTile(int tx, int ty)

@@ -113,6 +113,11 @@ public class Monkey
 	{
 		return this.getHeight() / 2;
 	}
+
+	public String getColor()
+	{
+		return this.color;
+	}
 	
 	public Rectangle getRectangle()
 	{
