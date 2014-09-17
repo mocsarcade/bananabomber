@@ -32,6 +32,7 @@ public class Game extends BasicGame
 		}
 		
 		this.monkey.update(input, delta);
+		this.gamemap.update(delta);
 	}
 	
 	public void render(GameContainer container, Graphics graphics) throws SlickException

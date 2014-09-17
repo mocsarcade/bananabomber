@@ -11,12 +11,14 @@ public class Monkey
 	private float speed;
 	private Image image;
 	private GameMap gamemap;
+	private int power;
 	
 	public Monkey(GameMap gamemap) throws SlickException
 	{
 		this.x = 64;
 		this.y = 64;
 		this.speed = 0.25f;
+		this.power = 3;
 		
 		this.gamemap = gamemap;
 		this.image = new Image("./res/monkey.png");
@@ -62,7 +64,10 @@ public class Monkey
 		{
 			Tile tile = this.gamemap.getTile(this.x, this.y);
 			
-			Bomb bomb = new Bomb(tile);
+			if(!tile.hasBomb())
+			{
+				tile.addBomb(new Bomb(tile, this.power));
+			}
 		}
 	}
 	

@@ -5,14 +5,19 @@ import org.newdawn.slick.Graphics;
 
 public class FloorTile extends Tile
 {
-	public FloorTile(int tx, int ty)
+	public FloorTile(GameMap gamemap, int tx, int ty)
 	{
-		super(tx, ty);
+		super(gamemap, tx, ty);
 		
 		this.color = Color.gray;
 	}
 
 	public boolean isPassable()
+	{
+		return true;
+	}
+	
+	public boolean canExplode()
 	{
 		return true;
 	}

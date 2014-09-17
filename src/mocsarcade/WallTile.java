@@ -5,14 +5,19 @@ import org.newdawn.slick.Graphics;
 
 public class WallTile extends Tile
 {
-	public WallTile(int tx, int ty)
+	public WallTile(GameMap gamemap, int tx, int ty)
 	{
-		super(tx, ty);
+		super(gamemap, tx, ty);
 		
 		this.color = Color.darkGray;
 	}
 
 	public boolean isPassable()
+	{
+		return false;
+	}
+	
+	public boolean canExplode()
 	{
 		return false;
 	}

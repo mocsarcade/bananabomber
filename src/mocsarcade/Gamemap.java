@@ -20,12 +20,23 @@ public class GameMap
 				|| ty < 1 || ty >= this.getTileyHeight() - 1)
 				|| (tx % 2 == 0 && ty % 2 == 0))
 				{
-					this.tiles[tx][ty] = new WallTile(tx, ty);
+					this.tiles[tx][ty] = new WallTile(this, tx, ty);
 				}
 				else
 				{
-					this.tiles[tx][ty] = new FloorTile(tx, ty);
+					this.tiles[tx][ty] = new FloorTile(this, tx, ty);
 				}
+			}
+		}
+	}
+	
+	public void update(int delta)
+	{
+		for(int tx = 0; tx < GameMap.TILEY_WIDTH; tx++)
+		{
+			for(int ty = 0; ty < GameMap.TILEY_HEIGHT; ty++)
+			{
+				this.tiles[tx][ty].update(delta);
 			}
 		}
 	}
