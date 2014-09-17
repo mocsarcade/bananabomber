@@ -39,7 +39,8 @@ public class Monkey
 		
 		if(input.isKeyDown(this.keyscheme.moveNorth))
 		{
-			if(this.gamemap.getTile(this.x, this.y - step).isPassable())
+			if(Math.floor(this.y / Tile.HEIGHT) == Math.floor((this.y - step) / Tile.HEIGHT)
+			|| this.gamemap.getTile(this.x, this.y - step).isPassable())
 			{
 				this.y -= step;
 			}
@@ -47,7 +48,8 @@ public class Monkey
 		
 		if(input.isKeyDown(this.keyscheme.moveSouth))
 		{
-			if(this.gamemap.getTile(this.x, this.y + step).isPassable())
+			if(Math.floor(this.y / Tile.HEIGHT) == Math.floor((this.y + step) / Tile.HEIGHT)
+			|| this.gamemap.getTile(this.x, this.y + step).isPassable())
 			{
 				this.y += step;
 			}
@@ -55,7 +57,8 @@ public class Monkey
 
 		if(input.isKeyDown(this.keyscheme.moveWest))
 		{
-			if(this.gamemap.getTile(this.x - step, this.y).isPassable())
+			if(Math.floor(this.x / Tile.WIDTH) == Math.floor((this.x - step) / Tile.WIDTH)
+			|| this.gamemap.getTile(this.x - step, this.y).isPassable())
 			{
 				this.x -= step;
 			}
@@ -63,7 +66,8 @@ public class Monkey
 		
 		if(input.isKeyDown(this.keyscheme.moveEast))
 		{
-			if(this.gamemap.getTile(this.x + step, this.y).isPassable())
+			if(Math.floor(this.x / Tile.WIDTH) == Math.floor((this.x + step) / Tile.WIDTH)
+			|| this.gamemap.getTile(this.x + step, this.y).isPassable())
 			{
 				this.x += step;
 			}

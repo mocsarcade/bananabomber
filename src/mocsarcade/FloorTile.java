@@ -14,7 +14,8 @@ public class FloorTile extends Tile
 
 	public boolean isPassable()
 	{
-		if(this.crate != null)
+		if(this.crate != null
+		|| this.bomb != null)
 		{
 			return false;
 		}
