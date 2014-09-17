@@ -36,8 +36,9 @@ public class GameMap
 				}
 			}
 		}
-		
-		this.monkies.add(new Monkey(this));
+
+		this.monkies.add(new Monkey(this, "red"));
+		this.monkies.add(new Monkey(this, "green"));
 	}
 	
 	public void update(Input input, int delta)

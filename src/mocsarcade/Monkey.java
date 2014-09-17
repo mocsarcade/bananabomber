@@ -14,23 +14,26 @@ public class Monkey
 	private Image image;
 	private GameMap gamemap;
 	private int power;
+	private String color;
+	private KeyScheme keyscheme;
 	
-	public Monkey(GameMap gamemap) throws SlickException
+	public Monkey(GameMap gamemap, String color) throws SlickException
 	{
+		this.gamemap = gamemap;
+		this.color = color;
 		this.x = 64;
 		this.y = 64;
 		this.speed = 0.25f;
 		this.power = 3;
-		
-		this.gamemap = gamemap;
-		this.image = new Image("./res/monkey.png");
+		this.image = new Image("./res/" + this.color + ".monkey.png");
+		this.keyscheme = new KeyScheme(this.color);
 	}
 	
 	public void update(Input input, int delta)
 	{
 		float step = this.speed * delta;
 		
-		if(input.isKeyDown(Input.KEY_UP))
+		if(input.isKeyDown(this.keyscheme.moveNorth))
 		{
 			if(this.gamemap.getTile(this.x, this.y - step).isPassable())
 			{
@@ -38,7 +41,7 @@ public class Monkey
 			}
 		}
 		
-		if(input.isKeyDown(Input.KEY_DOWN))
+		if(input.isKeyDown(this.keyscheme.moveSouth))
 		{
 			if(this.gamemap.getTile(this.x, this.y + step).isPassable())
 			{
@@ -46,7 +49,7 @@ public class Monkey
 			}
 		}
 
-		if(input.isKeyDown(Input.KEY_LEFT))
+		if(input.isKeyDown(this.keyscheme.moveWest))
 		{
 			if(this.gamemap.getTile(this.x - step, this.y).isPassable())
 			{
@@ -54,7 +57,7 @@ public class Monkey
 			}
 		}
 		
-		if(input.isKeyDown(Input.KEY_RIGHT))
+		if(input.isKeyDown(this.keyscheme.moveEast))
 		{
 			if(this.gamemap.getTile(this.x + step, this.y).isPassable())
 			{
@@ -62,7 +65,7 @@ public class Monkey
 			}
 		}
 		
-		if(input.isKeyDown(Input.KEY_SPACE))
+		if(input.isKeyDown(this.keyscheme.dropBomb))
 		{
 			Tile tile = this.gamemap.getTile(this.x, this.y);
 			
