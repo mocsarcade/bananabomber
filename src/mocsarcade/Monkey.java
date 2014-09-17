@@ -57,6 +57,13 @@ public class Monkey
 				this.x += step;
 			}
 		}
+		
+		if(input.isKeyDown(Input.KEY_SPACE))
+		{
+			Tile tile = this.gamemap.getTile(this.x, this.y);
+			
+			Bomb bomb = new Bomb(tile);
+		}
 	}
 	
 	public void render(Graphics graphics)

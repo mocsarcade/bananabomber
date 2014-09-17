@@ -17,7 +17,8 @@ public class GameMap
 			for(int ty = 0; ty < GameMap.TILEY_HEIGHT; ty++)
 			{
 				if((tx < 1 || tx >= this.getTileyWidth() - 1
-				|| ty < 1 || ty >= this.getTileyHeight() - 1))
+				|| ty < 1 || ty >= this.getTileyHeight() - 1)
+				|| (tx % 2 == 0 && ty % 2 == 0))
 				{
 					this.tiles[tx][ty] = new WallTile(tx, ty);
 				}
