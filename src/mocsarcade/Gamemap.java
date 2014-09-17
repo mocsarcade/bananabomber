@@ -1,26 +1,65 @@
 package mocsarcade;
 
-public class Gamemap
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.SlickException;
+
+public class GameMap
 {
-	private int UNIT = 48;
+	private static int TILEY_WIDTH = Game.WIDTH / Tile.SIZE;
+	private static int TILEY_HEIGHT = Game.HEIGHT / Tile.SIZE;
 	
-	public boolean isNotBlocked(float x, float y)
+	private Tile[][] tiles = new Tile[GameMap.TILEY_WIDTH][GameMap.TILEY_HEIGHT];
+	
+	public GameMap() throws SlickException
 	{
-		if(x < UNIT || x > Game.WIDTH - UNIT
-		|| y < UNIT || y > Game.HEIGHT - UNIT)
+		for(int tx = 0; tx < GameMap.TILEY_WIDTH; tx++)
 		{
-			return false;
+			for(int ty = 0; ty < GameMap.TILEY_HEIGHT; ty++)
+			{
+				if((tx < 1 || tx >= this.getTileyWidth() - 1
+				|| ty < 1 || ty >= this.getTileyHeight() - 1))
+				{
+					this.tiles[tx][ty] = new WallTile(tx, ty);
+				}
+				else
+				{
+					this.tiles[tx][ty] = new FloorTile(tx, ty);
+				}
+			}
 		}
-		
-		if(Math.floor(x / UNIT) % 2 == 0
-		&& Math.floor(y / UNIT) % 2 == 0)
+	}
+	
+	public void render(Graphics graphics)
+	{
+		for(int tx = 0; tx < GameMap.TILEY_WIDTH; tx++)
 		{
-			return false;
+			for(int ty = 0; ty < GameMap.TILEY_HEIGHT; ty++)
+			{
+				this.tiles[tx][ty].render(graphics);
+			}
 		}
+	}
+	
+	public Tile getTile(int tx, int ty)
+	{
+		return this.tiles[tx][ty];
+	}
+	
+	public Tile getTile(float x, float y)
+	{
+		int tx = (int)(Math.floor(x / Tile.SIZE));
+		int ty = (int)(Math.floor(y / Tile.SIZE));
 		
-		//if(is a bomb here
-		//or a crate here)
-		
-		return true;
+		return this.tiles[tx][ty];
+	}
+	
+	public int getTileyWidth()
+	{
+		return GameMap.TILEY_WIDTH;
+	}
+	
+	public int getTileyHeight()
+	{
+		return GameMap.TILEY_HEIGHT;
 	}
 }

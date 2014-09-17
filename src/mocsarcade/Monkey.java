@@ -2,6 +2,7 @@ package mocsarcade;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
 public class Monkey
@@ -9,9 +10,9 @@ public class Monkey
 	private float x, y;
 	private float speed;
 	private Image image;
-	private Gamemap gamemap;
+	private GameMap gamemap;
 	
-	public Monkey(Gamemap gamemap) throws SlickException
+	public Monkey(GameMap gamemap) throws SlickException
 	{
 		this.x = 64;
 		this.y = 64;
@@ -27,7 +28,7 @@ public class Monkey
 		
 		if(input.isKeyDown(Input.KEY_UP))
 		{
-			if(this.gamemap.isNotBlocked(this.x, this.y - step))
+			if(this.gamemap.getTile(this.x, this.y - step).isPassable())
 			{
 				this.y -= step;
 			}
@@ -35,7 +36,7 @@ public class Monkey
 		
 		if(input.isKeyDown(Input.KEY_DOWN))
 		{
-			if(this.gamemap.isNotBlocked(this.x, this.y + step))
+			if(this.gamemap.getTile(this.x, this.y + step).isPassable())
 			{
 				this.y += step;
 			}
@@ -43,7 +44,7 @@ public class Monkey
 
 		if(input.isKeyDown(Input.KEY_LEFT))
 		{
-			if(this.gamemap.isNotBlocked(this.x - step, this.y))
+			if(this.gamemap.getTile(this.x - step, this.y).isPassable())
 			{
 				this.x -= step;
 			}
@@ -51,14 +52,14 @@ public class Monkey
 		
 		if(input.isKeyDown(Input.KEY_RIGHT))
 		{
-			if(this.gamemap.isNotBlocked(this.x + step, this.y))
+			if(this.gamemap.getTile(this.x + step, this.y).isPassable())
 			{
 				this.x += step;
 			}
 		}
 	}
 	
-	public void render()
+	public void render(Graphics graphics)
 	{
 		float x = this.x - this.getHalfWidth();
 		float y = this.y - this.getHalfHeight();

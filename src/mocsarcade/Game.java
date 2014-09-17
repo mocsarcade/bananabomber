@@ -3,6 +3,7 @@ import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
 public class Game extends BasicGame
@@ -13,22 +14,30 @@ public class Game extends BasicGame
 	}
 	
 	Monkey monkey;
-	Gamemap gamemap;
+	GameMap gamemap;
 	
 	public void init(GameContainer container) throws SlickException
 	{
-		this.gamemap = new Gamemap();
+		this.gamemap = new GameMap();
 		this.monkey = new Monkey(this.gamemap);
 	}
 	
 	public void update(GameContainer container, int delta) throws SlickException
 	{
-		this.monkey.update(container.getInput(), delta);
+		Input input = container.getInput();
+		
+		if(input.isKeyDown(Input.KEY_ESCAPE))
+		{
+			System.exit(0);
+		}
+		
+		this.monkey.update(input, delta);
 	}
 	
 	public void render(GameContainer container, Graphics graphics) throws SlickException
 	{
-		this.monkey.render();
+		this.gamemap.render(graphics);
+		this.monkey.render(graphics);
 	}
 	
 	public static void main(String[] args) throws SlickException
