@@ -15,7 +15,7 @@ public abstract class Tile
 	protected Crate crate;
 	protected Explosion explosion;
 	protected Rectangle rectangle;
-	public Powerup powerup;
+	public Banana powerup;
 	
 	public Tile(GameMap gamemap, int tx, int ty)
 	{
@@ -168,7 +168,7 @@ public abstract class Tile
 					{
 						if(new Random().nextInt(10) <= 3)
 						{
-							this.powerup = new Powerup(this);
+							this.powerup = new Banana(this);
 						}
 					}
 				}

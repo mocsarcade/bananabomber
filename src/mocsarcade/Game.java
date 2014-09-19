@@ -18,11 +18,16 @@ public class Game extends BasicGame
 	
 	public void init(GameContainer container) throws SlickException
 	{
-		Powerup.images.put("intensity", new Image("./res/intensity.banana.png"));
-		Powerup.images.put("capacity", new Image("./res/capacity.banana.png"));
+		Banana.images.put("intensity", new Image("./res/intensity.banana.png"));
+		Banana.images.put("capacity", new Image("./res/capacity.banana.png"));
 		Monkey.images.put("green", new Image("./res/green.monkey.png"));
 		Monkey.images.put("red", new Image("./res/red.monkey.png"));
 		
+		this.initiate();
+	}
+	
+	public void initiate()
+	{
 		this.gamemap = new GameMap(this);
 	}
 	
@@ -41,11 +46,6 @@ public class Game extends BasicGame
 	public void render(GameContainer container, Graphics graphics) throws SlickException
 	{
 		this.gamemap.render(graphics);
-	}
-	
-	public void reset()
-	{
-		this.gamemap = new GameMap(this);
 	}
 	
 	public static void main(String[] args) throws SlickException

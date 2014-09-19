@@ -7,21 +7,21 @@ import java.util.Random;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
-public class Powerup
+public class Banana
 {
 	private Tile tile;
 	private Image image;
 	
-	public Powerup(Tile tile)
+	public Banana(Tile tile)
 	{
 		this.tile = tile;
 		if(new Random().nextInt(2) == 1)
 		{
-			this.image = Powerup.images.get("intensity");
+			this.image = Banana.images.get("intensity");
 		}
 		else
 		{
-			this.image = Powerup.images.get("capacity");
+			this.image = Banana.images.get("capacity");
 		}
 	}
 	
@@ -34,12 +34,12 @@ public class Powerup
 			{
 				this.tile.powerup = null;
 				
-				if(this.image == Powerup.images.get("capacity banana"))
+				if(this.image == Banana.images.get("capacity banana"))
 				{
 					System.out.println("AMOUNT");
 					monkey.bombcount += 1;
 				}
-				else if(this.image == Powerup.images.get("intensity banana"))
+				else if(this.image == Banana.images.get("intensity banana"))
 				{
 					System.out.println("POWER");
 					monkey.power += 1;

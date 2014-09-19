@@ -67,7 +67,7 @@ public class GameMap
 			
 			if(this.gameoverTimer <= 0)
 			{
-				this.game.reset();
+				this.game.initiate();
 			}
 		}
 		else
