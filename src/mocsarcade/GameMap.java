@@ -20,7 +20,7 @@ public class GameMap
 	private int gameoverTimer;
 	private String gameoverMessage;
 	
-	public GameMap(Game game) throws SlickException
+	public GameMap(Game game)
 	{
 		this.game = game;
 		

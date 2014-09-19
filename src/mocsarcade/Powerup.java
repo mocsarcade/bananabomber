@@ -1,6 +1,7 @@
 package mocsarcade;
 
 import java.awt.Rectangle;
+import java.util.HashMap;
 import java.util.Random;
 
 import org.newdawn.slick.Graphics;
@@ -16,11 +17,11 @@ public class Powerup
 		this.tile = tile;
 		if(new Random().nextInt(2) == 1)
 		{
-			this.image = Powerup.POWER_IMAGE;
+			this.image = Powerup.images.get("intensity");
 		}
 		else
 		{
-			this.image = Powerup.AMOUNT_IMAGE;
+			this.image = Powerup.images.get("capacity");
 		}
 	}
 	
@@ -33,12 +34,12 @@ public class Powerup
 			{
 				this.tile.powerup = null;
 				
-				if(this.image == Powerup.AMOUNT_IMAGE)
+				if(this.image == Powerup.images.get("capacity banana"))
 				{
 					System.out.println("AMOUNT");
 					monkey.bombcount += 1;
 				}
-				else if(this.image == Powerup.POWER_IMAGE)
+				else if(this.image == Powerup.images.get("intensity banana"))
 				{
 					System.out.println("POWER");
 					monkey.power += 1;
@@ -55,6 +56,5 @@ public class Powerup
 		this.image.draw(x, y);
 	}
 	
-	public static Image POWER_IMAGE;
-	public static Image AMOUNT_IMAGE;
+	public static HashMap<String, Image> images = new HashMap<String, Image>();
 }

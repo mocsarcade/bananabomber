@@ -1,6 +1,7 @@
 package mocsarcade;
 
 import java.awt.Rectangle;
+import java.util.HashMap;
 import java.util.Random;
 
 import org.newdawn.slick.Image;
@@ -10,6 +11,7 @@ import org.newdawn.slick.SlickException;
 
 public class Monkey
 {
+	public static HashMap<String, Image> images = new HashMap<String, Image>();
 	private float x, y;
 	private float speed;
 	private Image image;
@@ -19,7 +21,7 @@ public class Monkey
 	private KeyScheme keyscheme;
 	public int bombcount;
 	
-	public Monkey(GameMap gamemap, String color) throws SlickException
+	public Monkey(GameMap gamemap, String color)
 	{
 		this.gamemap = gamemap;
 		this.color = color;
@@ -31,7 +33,7 @@ public class Monkey
 		this.speed = 0.25f;
 		this.power = 2;
 		this.bombcount = 1;
-		this.image = new Image("./res/" + this.color + ".monkey.png");
+		this.image = Monkey.images.get(this.color);
 		this.keyscheme = new KeyScheme(this.color);
 	}
 	
