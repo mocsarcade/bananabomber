@@ -101,7 +101,7 @@ public class Monkey
 			{
 				if(this.bombCapacity > 0)
 				{
-					tile.bomb = new Bomb(tile, this.bombIntensity, this);
+					tile.bomb = new Bomb(this, tile, this.bombIntensity);
 					this.bombCapacity -= 1;
 				}
 			}

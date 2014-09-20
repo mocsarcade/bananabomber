@@ -7,17 +7,15 @@ public class Bomb
 {
 	private Tile tile;
 	private int timer;
-	private Direction direction;
-	private int power;
+	private int intensity;
 	private Monkey monkey;
 	
-	public Bomb(Tile tile, int power, Monkey monkey)
+	public Bomb(Monkey monkey, Tile tile, int intensity)
 	{
 		this.monkey = monkey;
 		this.tile = tile;
+		this.intensity = intensity;
 		this.timer = 3 * 1000;
-		this.direction = Direction.ALL;
-		this.power = power;
 	}
 	
 	public void update(int delta)
@@ -33,7 +31,7 @@ public class Bomb
 	public void render(Graphics graphics)
 	{
 		float x = this.tile.getX() + this.tile.getWidth() * 0.125f;
-		float y = this.tile.getY() + this.tile.getHeight() * 0.125f;;
+		float y = this.tile.getY() + this.tile.getHeight() * 0.125f;
 		float width = this.tile.getWidth() * 0.75f;
 		float height = this.tile.getHeight() * 0.75f;
 		Color color = new Color(this.timer % 255, 0, 0);
@@ -46,6 +44,6 @@ public class Bomb
 	{
 		this.monkey.bombCapacity += 1;
 		this.tile.bomb = null;
-		this.tile.explode(this.direction, this.power, true);
+		this.tile.explode(Direction.ALL, this.intensity, true);
 	}
 }

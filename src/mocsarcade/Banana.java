@@ -10,18 +10,19 @@ import org.newdawn.slick.Image;
 public class Banana
 {
 	private Tile tile;
-	private Image image;
+	private String type;
 	
 	public Banana(Tile tile)
 	{
 		this.tile = tile;
-		if(new Random().nextInt(2) == 1)
+		
+		if(Game.randomness.nextBoolean())
 		{
-			this.image = Banana.images.get("intensity");
+			this.type = "intensity";
 		}
 		else
 		{
-			this.image = Banana.images.get("capacity");
+			this.type = "capacity";
 		}
 	}
 	
@@ -34,14 +35,12 @@ public class Banana
 			{
 				this.tile.powerup = null;
 				
-				if(this.image == Banana.images.get("capacity banana"))
+				if(this.type == "capacity")
 				{
-					System.out.println("AMOUNT");
 					monkey.bombCapacity += 1;
 				}
-				else if(this.image == Banana.images.get("intensity banana"))
+				else if(this.type == "intensity")
 				{
-					System.out.println("POWER");
 					monkey.bombIntensity += 1;
 				}
 			}
@@ -53,7 +52,7 @@ public class Banana
 		float x = this.tile.getX();
 		float y = this.tile.getY();
 		
-		this.image.draw(x, y);
+		Banana.images.get(this.type).draw(x, y);
 	}
 	
 	public static HashMap<String, Image> images = new HashMap<String, Image>();
