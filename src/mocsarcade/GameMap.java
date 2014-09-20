@@ -1,5 +1,6 @@
 package mocsarcade;
 
+import java.awt.Rectangle;
 import java.util.LinkedList;
 
 import org.newdawn.slick.Color;
@@ -119,6 +120,21 @@ public class GameMap
 		
 		return this.tiles[tx][ty];
 	}
+
+	public LinkedList<Tile> getTiles(Rectangle hitbox)
+	{
+		LinkedList<Tile> tiles = new LinkedList<Tile>();
+		
+		for(int tx = hitbox.x / Tile.WIDTH; tx <= (hitbox.x + hitbox.width) / Tile.WIDTH; tx += 1)
+		{
+			for(int ty = hitbox.y / Tile.HEIGHT; ty <= (hitbox.y + hitbox.height) / Tile.HEIGHT; ty += 1)
+			{
+				tiles.add(this.tiles[tx][ty]);
+			}
+		}
+		
+		return tiles;
+	}
 	
 	public int getTileyWidth()
 	{
@@ -128,6 +144,19 @@ public class GameMap
 	public int getTileyHeight()
 	{
 		return GameMap.TILEY_HEIGHT;
+	}
+	
+	public boolean canMoveHere(Rectangle rectangle)
+	{
+		for(Tile tile : this.getTiles(rectangle))
+		{
+			if(tile.canMoveHere() == false)
+			{
+				return false;
+			}
+		}
+		
+		return true;
 	}
 	
 	public LinkedList<Monkey> getMonkies()

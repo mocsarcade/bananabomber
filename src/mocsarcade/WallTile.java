@@ -12,7 +12,7 @@ public class WallTile extends Tile
 		this.color = Color.darkGray;
 	}
 
-	public boolean isPassable()
+	public boolean canMoveHere()
 	{
 		return false;
 	}

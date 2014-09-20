@@ -146,7 +146,7 @@ public abstract class Tile
 					
 					for(Monkey monkey : this.gamemap.getMonkies())
 					{
-						if(monkey.getRectangle().intersects(this.getRectangle()))
+						if(monkey.getHitbox().intersects(this.getRectangle()))
 						{
 							this.gamemap.removeMonkey(monkey);
 						}
@@ -193,7 +193,7 @@ public abstract class Tile
 		}
 	}
 	
-	public abstract boolean isPassable();
+	public abstract boolean canMoveHere();
 	public abstract boolean canExplode();
 
 	public static final int WIDTH = 40;

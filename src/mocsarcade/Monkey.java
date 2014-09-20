@@ -4,6 +4,7 @@ import java.awt.Rectangle;
 import java.util.HashMap;
 import java.util.Random;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.Graphics;
@@ -11,20 +12,22 @@ import org.newdawn.slick.SlickException;
 
 public class Monkey
 {
-	public static HashMap<String, Image> images = new HashMap<String, Image>();
-	private float x, y;
-	private float speed;
-	private Image image;
-	private GameMap gamemap;
 	public int power;
-	private String color;
-	private KeyScheme keyscheme;
+	private float speed;
 	public int bombcount;
+	
+	private float x, y;
+	private Image image;
+	private String color;
+	private GameMap gamemap;
+	private KeyScheme keyscheme;
 	
 	public Monkey(GameMap gamemap, String color)
 	{
 		this.gamemap = gamemap;
+		
 		this.color = color;
+		
 		Random random = new Random();
 		this.x = (random.nextInt(9) + 1) * Tile.WIDTH * 2 - (Tile.WIDTH * 0.5f);
 		this.y = (random.nextInt(7) + 1) * Tile.WIDTH * 2 - (Tile.WIDTH * 0.5f);
@@ -39,12 +42,13 @@ public class Monkey
 	
 	public void update(Input input, int delta)
 	{
-		float step = this.speed * delta;
+		float step = this.getSpeed();
 		
 		if(input.isKeyDown(this.keyscheme.moveNorth))
 		{
-			if(Math.floor(this.y / Tile.HEIGHT) == Math.floor((this.y - step) / Tile.HEIGHT)
-			|| this.gamemap.getTile(this.x, this.y - step).isPassable())
+			Rectangle hitbox = this.getHitbox();
+			hitbox.translate(0, (int)((step+1)*-1));
+			if(this.gamemap.canMoveHere(hitbox))
 			{
 				this.y -= step;
 			}
@@ -52,29 +56,34 @@ public class Monkey
 		
 		if(input.isKeyDown(this.keyscheme.moveSouth))
 		{
-			if(Math.floor(this.y / Tile.HEIGHT) == Math.floor((this.y + step) / Tile.HEIGHT)
-			|| this.gamemap.getTile(this.x, this.y + step).isPassable())
+			Rectangle hitbox = this.getHitbox();
+			hitbox.translate(0, (int)(step+1));
+			if(this.gamemap.canMoveHere(hitbox))
 			{
 				this.y += step;
-			}
-		}
-
-		if(input.isKeyDown(this.keyscheme.moveWest))
-		{
-			if(Math.floor(this.x / Tile.WIDTH) == Math.floor((this.x - step) / Tile.WIDTH)
-			|| this.gamemap.getTile(this.x - step, this.y).isPassable())
-			{
-				this.x -= step;
 			}
 		}
 		
 		if(input.isKeyDown(this.keyscheme.moveEast))
 		{
-			if(Math.floor(this.x / Tile.WIDTH) == Math.floor((this.x + step) / Tile.WIDTH)
-			|| this.gamemap.getTile(this.x + step, this.y).isPassable())
+			Rectangle hitbox = this.getHitbox();
+			hitbox.translate((int)(step+1), 0);
+			if(this.gamemap.canMoveHere(hitbox))
 			{
 				this.x += step;
 			}
+		}
+
+		if(input.isKeyDown(this.keyscheme.moveWest))
+		{
+			Rectangle nextHitbox = this.getHitbox();
+			nextHitbox.translate((int)((step+1)*-1), 0);
+			if(this.gamemap.canMoveHere(nextHitbox))
+			{
+				this.x -= step;
+			}
+			
+			//if(this.gamemap.getTiles(this.getHitbox()).equals(this.gamemap.getTiles(nextHitbox))
 		}
 		
 		if(input.isKeyDown(this.keyscheme.dropBomb))
@@ -91,13 +100,17 @@ public class Monkey
 			}
 		}
 	}
-	
+
 	public void render(Graphics graphics)
 	{
-		float x = this.getX() - this.getHalfWidth();
-		float y = this.getY() - this.getHalfHeight();
+		float x = this.getX() - (this.getWidth() / 2);
+		float y = this.getY() - (this.getHeight() / 2);
 		
-		this.image.draw(x, y);
+		//this.image.draw(x, y);
+		
+		Rectangle hitbox = this.getHitbox();
+		graphics.setColor(Color.orange);
+		graphics.drawRect(hitbox.x, hitbox.y, hitbox.width, hitbox.height);
 	}
 	
 	public float getX()
@@ -122,22 +135,33 @@ public class Monkey
 	
 	public int getWidth()
 	{
-		return this.image.getWidth();
+		return Monkey.WIDTH;
 	}
 	
 	public int getHeight()
 	{
-		return this.image.getHeight();
+		return Monkey.HEIGHT;
 	}
 	
-	public int getHalfWidth()
+	public int getHitboxWidth()
 	{
-		return this.getWidth() / 2;
+		return Monkey.HITBOX_WIDTH;
 	}
 	
-	public int getHalfHeight()
+	public int getHitboxHeight()
 	{
-		return this.getHeight() / 2;
+		return Monkey.HITBOX_HEIGHT;
+	}
+	
+	public Rectangle getHitbox()
+	{
+		int x = (int)(this.getX() - (this.getHitboxWidth() / 2));
+		int y = (int)(this.getY() - (this.getHitboxHeight() / 4));
+		
+		int width = this.getHitboxWidth();
+		int height = this.getHitboxHeight();
+		
+		return new Rectangle(x, y, width, height);
 	}
 
 	public String getColor()
@@ -145,13 +169,16 @@ public class Monkey
 		return this.color;
 	}
 	
-	public Rectangle getRectangle()
+	private float getSpeed()
 	{
-		int x = (int)(this.getX() - this.getHalfWidth());
-		int y = (int)(this.getY() - this.getHalfHeight());
-		int width = this.getWidth();
-		int height = this.getHeight();
-		
-		return new Rectangle(x, y, width, height);
+		return this.speed;
 	}
+	
+	private final static int WIDTH = 38;
+	private final static int HEIGHT = 38;
+	private final static int HITBOX_WIDTH = 11;
+	private final static int HITBOX_HEIGHT = 22;
+	private final static int HITBOX_OFFSET = 5;
+	
+	public static HashMap<String, Image> images = new HashMap<String, Image>();
 }

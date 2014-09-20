@@ -12,7 +12,7 @@ public class FloorTile extends Tile
 		this.crate = new Crate(this);
 	}
 
-	public boolean isPassable()
+	public boolean canMoveHere()
 	{
 		if(this.crate != null
 		|| this.bomb != null)

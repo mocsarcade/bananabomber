@@ -23,6 +23,8 @@ public class Crate
 		float width = this.tile.getWidth() - 10;
 		float height = this.tile.getHeight() - 10;
 		
+		x -= 5; y -= 5; width += 10; height += 10;
+		
 		graphics.setColor(this.color);
 		graphics.fillRoundRect(x, y, width, height, 5);
 	}
