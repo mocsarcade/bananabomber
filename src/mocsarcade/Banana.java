@@ -37,12 +37,12 @@ public class Banana
 				if(this.image == Banana.images.get("capacity banana"))
 				{
 					System.out.println("AMOUNT");
-					monkey.bombcount += 1;
+					monkey.bombCapacity += 1;
 				}
 				else if(this.image == Banana.images.get("intensity banana"))
 				{
 					System.out.println("POWER");
-					monkey.power += 1;
+					monkey.bombIntensity += 1;
 				}
 			}
 		}

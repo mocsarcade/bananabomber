@@ -1,4 +1,6 @@
 package mocsarcade;
+import java.util.Random;
+
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
@@ -9,8 +11,6 @@ import org.newdawn.slick.SlickException;
 
 public class Game extends BasicGame
 {
-	GameMap gamemap;
-	
 	public Game()
 	{
 		super(Game.TITLE + " " + Game.VERSION);
@@ -25,6 +25,8 @@ public class Game extends BasicGame
 		
 		this.initiate();
 	}
+	
+	public GameMap gamemap;
 	
 	public void initiate()
 	{
@@ -61,4 +63,6 @@ public class Game extends BasicGame
 	public static final int HEIGHT = 600;
 	public static final String VERSION = "v0.0.2";
 	public static final String TITLE = "Bananabomber";
+	
+	public static Random randomness = new Random();
 }

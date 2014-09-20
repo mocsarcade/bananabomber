@@ -44,7 +44,7 @@ public class Bomb
 	
 	public void explode()
 	{
-		this.monkey.bombcount += 1;
+		this.monkey.bombCapacity += 1;
 		this.tile.bomb = null;
 		this.tile.explode(this.direction, this.power, true);
 	}

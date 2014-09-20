@@ -12,85 +12,64 @@ import org.newdawn.slick.SlickException;
 
 public class Monkey
 {
-	public int power;
-	private float speed;
-	public int bombcount;
-	
 	private float x, y;
 	private float dx, dy;
+	
+	private GameMap gamemap;
+	
+	private float acceleration = 0.1f;
+	private float deacceleration = 0.0035f;
+	
 	private Image image;
 	private String color;
-	private GameMap gamemap;
 	private KeyScheme keyscheme;
-	private float deacceleration = 0.002f;
-	private float maximumSpeed = 0.2f;
+	
+	public int bombCapacity = 1;
+	public int bombIntensity = 2;
 	
 	public Monkey(GameMap gamemap, String color)
 	{
 		this.gamemap = gamemap;
+		this.x = (Game.randomness.nextInt(9) + 1) * Tile.WIDTH * 2 - (Tile.WIDTH * 0.5f);
+		this.y = (Game.randomness.nextInt(7) + 1) * Tile.WIDTH * 2 - (Tile.WIDTH * 0.5f);
+		this.gamemap.getTile(this.x, this.y).explode(Direction.ALL, 2, false);
+		this.gamemap.getTile(this.x, this.y).explode(Direction.ALL, 2, false);
 		
 		this.color = color;
-		
-		Random random = new Random();
-		this.x = (random.nextInt(9) + 1) * Tile.WIDTH * 2 - (Tile.WIDTH * 0.5f);
-		this.y = (random.nextInt(7) + 1) * Tile.WIDTH * 2 - (Tile.WIDTH * 0.5f);
-		this.gamemap.getTile(this.x, this.y).explode(Direction.ALL, 2, false);
-		this.gamemap.getTile(this.x, this.y).explode(Direction.ALL, 2, false);
-		this.speed = 0.025f;
-		this.power = 2;
-		this.bombcount = 1;
 		this.image = Monkey.images.get(this.color);
 		this.keyscheme = new KeyScheme(this.color);
 	}
 	
 	public void update(Input input, int delta)
 	{
-		float step = this.getSpeed();
-		
 		if(input.isKeyDown(this.keyscheme.moveNorth))
 		{
-			this.dy -= this.getSpeed(delta);
-			if(this.dy < -this.maximumSpeed)
-				this.dy = -this.maximumSpeed;
+			this.dy = -this.getSpeed(delta);
 		}
 		
 		if(input.isKeyDown(this.keyscheme.moveSouth))
 		{
-			this.dy += this.getSpeed(delta);
-			if(this.dy > this.maximumSpeed)
-				this.dy = this.maximumSpeed;
+			this.dy = this.getSpeed(delta);
 		}
 		
 		if(input.isKeyDown(this.keyscheme.moveEast))
 		{
-			this.dx += this.getSpeed(delta);
-			if(this.dx > this.maximumSpeed)
-				this.dx = this.maximumSpeed;
+			this.dx = this.getSpeed(delta);
 		}
 
 		if(input.isKeyDown(this.keyscheme.moveWest))
 		{
-			this.dx -= this.getSpeed(delta);
-			if(this.dx < -this.maximumSpeed)
-				this.dx = -this.maximumSpeed;
+			this.dx = -this.getSpeed(delta);
 		}
 
 		if(this.gamemap.canMoveHere(this.getHitbox(), dx, 0))
 		{
 			this.x += this.dx;
 		}
-		else
-		{
-			this.dx = 0;
-		}
 
 		if(this.gamemap.canMoveHere(this.getHitbox(), 0, dy))
 		{
 			this.y += this.dy;
-		}
-		else
-		{
-			this.dy = 0;
 		}
 		
 		if(this.dx < 0)
@@ -118,12 +97,12 @@ public class Monkey
 		{
 			Tile tile = this.gamemap.getTile(this.x, this.y);
 			
-			if(!tile.hasBomb())
+			if(tile.bomb == null)
 			{
-				if(this.bombcount > 0)
+				if(this.bombCapacity > 0)
 				{
-					tile.addBomb(new Bomb(tile, this.power, this));
-					this.bombcount -= 1;
+					tile.bomb = new Bomb(tile, this.bombIntensity, this);
+					this.bombCapacity -= 1;
 				}
 			}
 		}
@@ -134,11 +113,7 @@ public class Monkey
 		float x = this.getX() - (this.getWidth() / 2);
 		float y = this.getY() - (this.getHeight() / 2);
 		
-		//this.image.draw(x, y);
-		
-		Rectangle hitbox = this.getHitbox();
-		graphics.setColor(Color.orange);
-		graphics.drawRect(hitbox.x, hitbox.y, hitbox.width, hitbox.height);
+		this.image.draw(x, y);
 	}
 	
 	public float getX()
@@ -197,21 +172,15 @@ public class Monkey
 		return this.color;
 	}
 	
-	private float getSpeed()
-	{
-		return this.speed;
-	}
-	
 	private float getSpeed(float delta)
 	{
-		return this.speed * delta;
+		return this.acceleration * delta;
 	}
 	
 	private final static int WIDTH = 38;
 	private final static int HEIGHT = 38;
 	private final static int HITBOX_WIDTH = 11;
 	private final static int HITBOX_HEIGHT = 22;
-	private final static int HITBOX_OFFSET = 5;
 	
 	public static HashMap<String, Image> images = new HashMap<String, Image>();
 }
