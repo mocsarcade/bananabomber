@@ -46,9 +46,7 @@ public class Monkey
 		
 		if(input.isKeyDown(this.keyscheme.moveNorth))
 		{
-			Rectangle hitbox = this.getHitbox();
-			hitbox.translate(0, (int)((step+1)*-1));
-			if(this.gamemap.canMoveHere(hitbox))
+			if(this.gamemap.canMoveHere(this.getHitbox(), Direction.NORTH, step))
 			{
 				this.y -= step;
 			}
@@ -56,9 +54,7 @@ public class Monkey
 		
 		if(input.isKeyDown(this.keyscheme.moveSouth))
 		{
-			Rectangle hitbox = this.getHitbox();
-			hitbox.translate(0, (int)(step+1));
-			if(this.gamemap.canMoveHere(hitbox))
+			if(this.gamemap.canMoveHere(this.getHitbox(), Direction.SOUTH, step))
 			{
 				this.y += step;
 			}
@@ -66,9 +62,7 @@ public class Monkey
 		
 		if(input.isKeyDown(this.keyscheme.moveEast))
 		{
-			Rectangle hitbox = this.getHitbox();
-			hitbox.translate((int)(step+1), 0);
-			if(this.gamemap.canMoveHere(hitbox))
+			if(this.gamemap.canMoveHere(this.getHitbox(), Direction.EAST, step))
 			{
 				this.x += step;
 			}
@@ -76,14 +70,10 @@ public class Monkey
 
 		if(input.isKeyDown(this.keyscheme.moveWest))
 		{
-			Rectangle nextHitbox = this.getHitbox();
-			nextHitbox.translate((int)((step+1)*-1), 0);
-			if(this.gamemap.canMoveHere(nextHitbox))
+			if(this.gamemap.canMoveHere(this.getHitbox(), Direction.WEST, step))
 			{
 				this.x -= step;
 			}
-			
-			//if(this.gamemap.getTiles(this.getHitbox()).equals(this.gamemap.getTiles(nextHitbox))
 		}
 		
 		if(input.isKeyDown(this.keyscheme.dropBomb))
@@ -106,11 +96,7 @@ public class Monkey
 		float x = this.getX() - (this.getWidth() / 2);
 		float y = this.getY() - (this.getHeight() / 2);
 		
-		//this.image.draw(x, y);
-		
-		Rectangle hitbox = this.getHitbox();
-		graphics.setColor(Color.orange);
-		graphics.drawRect(hitbox.x, hitbox.y, hitbox.width, hitbox.height);
+		this.image.draw(x, y);
 	}
 	
 	public float getX()

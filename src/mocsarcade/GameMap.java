@@ -146,13 +146,38 @@ public class GameMap
 		return GameMap.TILEY_HEIGHT;
 	}
 	
-	public boolean canMoveHere(Rectangle rectangle)
+	public boolean canMoveHere(Rectangle initialPosition, Direction direction, float velocity)
 	{
-		for(Tile tile : this.getTiles(rectangle))
+		Rectangle finalPosition = new Rectangle(initialPosition);
+
+		if(direction == Direction.NORTH)
 		{
-			if(tile.canMoveHere() == false)
+			finalPosition.translate(0, (int)((velocity+1)*-1));
+		}
+		else if(direction == Direction.SOUTH)
+		{
+			finalPosition.translate(0, (int)(velocity+1));
+		}
+		else if(direction == Direction.EAST)
+		{
+			finalPosition.translate((int)(velocity+1), 0);
+		}
+		else if(direction == Direction.WEST)
+		{
+			finalPosition.translate((int)((velocity+1)*-1), 0);
+		}
+		
+		LinkedList<Tile> initialPositionTiles = this.getTiles(initialPosition);
+		LinkedList<Tile> finalPositionTiles = this.getTiles(finalPosition);
+		
+		for(Tile finalPositionTile : finalPositionTiles)
+		{
+			if(!initialPositionTiles.contains(finalPositionTile))
 			{
-				return false;
+				if(finalPositionTile.canMoveHere() == false)
+				{
+					return false;
+				}
 			}
 		}
 		
