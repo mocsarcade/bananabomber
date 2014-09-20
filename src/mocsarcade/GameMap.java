@@ -1,6 +1,7 @@
 package mocsarcade;
 
 import java.awt.Rectangle;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import org.newdawn.slick.Color;
@@ -146,35 +147,39 @@ public class GameMap
 		return GameMap.TILEY_HEIGHT;
 	}
 	
-	public boolean canMoveHere(Rectangle initialPosition, Direction direction, float velocity)
+	public boolean canMoveHere(Rectangle i, float dx, float dy)
 	{
-		Rectangle finalPosition = new Rectangle(initialPosition);
-
-		if(direction == Direction.NORTH)
-		{
-			finalPosition.translate(0, (int)((velocity+1)*-1));
-		}
-		else if(direction == Direction.SOUTH)
-		{
-			finalPosition.translate(0, (int)(velocity+1));
-		}
-		else if(direction == Direction.EAST)
-		{
-			finalPosition.translate((int)(velocity+1), 0);
-		}
-		else if(direction == Direction.WEST)
-		{
-			finalPosition.translate((int)((velocity+1)*-1), 0);
-		}
+		// create a new rectangle
+		// to represent the position
+		// that we are moving towards.
+		Rectangle j = new Rectangle(i);
 		
-		LinkedList<Tile> initialPositionTiles = this.getTiles(initialPosition);
-		LinkedList<Tile> finalPositionTiles = this.getTiles(finalPosition);
+		// to ensure that the movement doesn't
+		// get stuck, add another pixel to the
+		// displacement of the movement.
+		if(dx < 0) {dx -= 1;} else if(dx > 0) {dx += 1;}
+		if(dy < 0) {dy -= 1;} else if(dy > 0) {dy += 1;}
 		
-		for(Tile finalPositionTile : finalPositionTiles)
+		// translate the position
+		// with the displacements.
+		j.translate((int)(dx), (int)(dy));
+		
+		// get all the tiles that both
+		// positions are in any way touching.
+		LinkedList<Tile> its = this.getTiles(i);
+		LinkedList<Tile> jts = this.getTiles(j);
+		
+		// for every tile in
+		// the new position..
+		for(Tile jt : jts)
 		{
-			if(!initialPositionTiles.contains(finalPositionTile))
+			// ..check if we are already
+			// on that tile in some way.
+			if(its.contains(jt) == false)
 			{
-				if(finalPositionTile.canMoveHere() == false)
+				// ..check if we can move
+				// there without collision.
+				if(jt.canMoveHere() == false)
 				{
 					return false;
 				}

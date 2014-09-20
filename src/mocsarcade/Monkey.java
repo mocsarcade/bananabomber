@@ -17,10 +17,13 @@ public class Monkey
 	public int bombcount;
 	
 	private float x, y;
+	private float dx, dy;
 	private Image image;
 	private String color;
 	private GameMap gamemap;
 	private KeyScheme keyscheme;
+	private float deacceleration = 0.002f;
+	private float maximumSpeed = 0.2f;
 	
 	public Monkey(GameMap gamemap, String color)
 	{
@@ -33,7 +36,7 @@ public class Monkey
 		this.y = (random.nextInt(7) + 1) * Tile.WIDTH * 2 - (Tile.WIDTH * 0.5f);
 		this.gamemap.getTile(this.x, this.y).explode(Direction.ALL, 2, false);
 		this.gamemap.getTile(this.x, this.y).explode(Direction.ALL, 2, false);
-		this.speed = 0.25f;
+		this.speed = 0.025f;
 		this.power = 2;
 		this.bombcount = 1;
 		this.image = Monkey.images.get(this.color);
@@ -46,34 +49,69 @@ public class Monkey
 		
 		if(input.isKeyDown(this.keyscheme.moveNorth))
 		{
-			if(this.gamemap.canMoveHere(this.getHitbox(), Direction.NORTH, step))
-			{
-				this.y -= step;
-			}
+			this.dy -= this.getSpeed(delta);
+			if(this.dy < -this.maximumSpeed)
+				this.dy = -this.maximumSpeed;
 		}
 		
 		if(input.isKeyDown(this.keyscheme.moveSouth))
 		{
-			if(this.gamemap.canMoveHere(this.getHitbox(), Direction.SOUTH, step))
-			{
-				this.y += step;
-			}
+			this.dy += this.getSpeed(delta);
+			if(this.dy > this.maximumSpeed)
+				this.dy = this.maximumSpeed;
 		}
 		
 		if(input.isKeyDown(this.keyscheme.moveEast))
 		{
-			if(this.gamemap.canMoveHere(this.getHitbox(), Direction.EAST, step))
-			{
-				this.x += step;
-			}
+			this.dx += this.getSpeed(delta);
+			if(this.dx > this.maximumSpeed)
+				this.dx = this.maximumSpeed;
 		}
 
 		if(input.isKeyDown(this.keyscheme.moveWest))
 		{
-			if(this.gamemap.canMoveHere(this.getHitbox(), Direction.WEST, step))
-			{
-				this.x -= step;
-			}
+			this.dx -= this.getSpeed(delta);
+			if(this.dx < -this.maximumSpeed)
+				this.dx = -this.maximumSpeed;
+		}
+
+		if(this.gamemap.canMoveHere(this.getHitbox(), dx, 0))
+		{
+			this.x += this.dx;
+		}
+		else
+		{
+			this.dx = 0;
+		}
+
+		if(this.gamemap.canMoveHere(this.getHitbox(), 0, dy))
+		{
+			this.y += this.dy;
+		}
+		else
+		{
+			this.dy = 0;
+		}
+		
+		if(this.dx < 0)
+		{
+			this.dx += this.deacceleration;
+			if(this.dx > 0) {this.dx = 0;}
+		}
+		else if(this.dx > 0)
+		{
+			this.dx -= this.deacceleration;
+			if(this.dx < 0) {this.dx = 0;}
+		}
+		if(this.dy < 0)
+		{
+			this.dy += this.deacceleration;
+			if(this.dy > 0) {this.dy = 0;}
+		}
+		else if(this.dy > 0)
+		{
+			this.dy -= this.deacceleration;
+			if(this.dy < 0) {this.dy = 0;}
 		}
 		
 		if(input.isKeyDown(this.keyscheme.dropBomb))
@@ -96,7 +134,11 @@ public class Monkey
 		float x = this.getX() - (this.getWidth() / 2);
 		float y = this.getY() - (this.getHeight() / 2);
 		
-		this.image.draw(x, y);
+		//this.image.draw(x, y);
+		
+		Rectangle hitbox = this.getHitbox();
+		graphics.setColor(Color.orange);
+		graphics.drawRect(hitbox.x, hitbox.y, hitbox.width, hitbox.height);
 	}
 	
 	public float getX()
@@ -158,6 +200,11 @@ public class Monkey
 	private float getSpeed()
 	{
 		return this.speed;
+	}
+	
+	private float getSpeed(float delta)
+	{
+		return this.speed * delta;
 	}
 	
 	private final static int WIDTH = 38;
