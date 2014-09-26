@@ -81,25 +81,17 @@ public class Game extends BasicGame
 		}
 		else
 		{
-			if(this.gamemap.monkies.size() == 0)
+			if(this.gamemap.monkeys.size() == 0)
 			{
 				this.gameoverTimer = 3 * 1000;
 				this.gameoverColor = Color.white;
-				this.gameoverMessage = "Everyone loses! :(";
+				this.gameoverMessage = "Everyone loses! :<";
 			}
-			else if(this.gamemap.monkies.size() == 1)
+			else if(this.gamemap.monkeys.size() == 1)
 			{
 				this.gameoverTimer = 3 * 1000;
-				this.gameoverMessage = this.gamemap.monkies.get(0).getColor() + " wins! :D";
-				
-				if(this.gamemap.monkies.get(0).getColor() == "red")
-				{
-					this.gameoverColor = Color.red;
-				}
-				else if(this.gamemap.monkies.get(0).getColor() == "green")
-				{
-					this.gameoverColor = Color.green;
-				}
+				this.gameoverColor = this.gamemap.monkeys.get(0).getColor();
+				this.gameoverMessage = this.gamemap.monkeys.get(0).getName() + " wins! :D";
 			}
 		}
 	}
@@ -123,6 +115,7 @@ public class Game extends BasicGame
 		container.setDisplayMode(Game.WIDTH, Game.HEIGHT, false);
 		//container.setTargetFrameRate(60);
 		//container.setFullscreen(true);
+		container.setShowFPS(false);
 		container.start();
 	}
 	

@@ -21,13 +21,14 @@ public class Monkey
 	private float deacceleration = 0.0035f;
 	
 	private Image image;
-	private String color;
+	private String name;
+	private Color color;
 	private KeyScheme keyscheme;
 	
 	public int bombCapacity = 1;
 	public int bombIntensity = 2;
 	
-	public Monkey(GameMap gamemap, String color)
+	public Monkey(GameMap gamemap, String name)
 	{
 		this.gamemap = gamemap;
 		this.x = (Game.randomness.nextInt(9) + 1) * Tile.WIDTH * 2 - (Tile.WIDTH * 0.5f);
@@ -35,9 +36,17 @@ public class Monkey
 		this.gamemap.getTile(this.x, this.y).explode(Direction.ALL, 2, false);
 		this.gamemap.getTile(this.x, this.y).explode(Direction.ALL, 2, false);
 		
-		this.color = color;
-		this.image = Monkey.images.get(this.color);
-		this.keyscheme = new KeyScheme(this.color);
+		this.name = name;
+		if(this.name == "red")
+		{
+			this.color = Color.red;
+		}
+		else if(this.name == "green")
+		{
+			this.color = Color.green;
+		}
+		this.image = Monkey.images.get(this.name);
+		this.keyscheme = new KeyScheme(this.name);
 	}
 	
 	public void update(Input input, int delta)
@@ -114,6 +123,17 @@ public class Monkey
 		float y = this.getY() - (this.getHeight() / 2);
 		
 		this.image.draw(x, y);
+		
+		graphics.setColor(this.color);
+		String status = this.name + " monkey: " + this.bombCapacity + " bombs with " + this.bombIntensity + " power";
+		if(this.name == "red")
+		{
+			graphics.drawString(status, 38, 12);
+		}
+		else if(this.name == "green")
+		{
+			graphics.drawString(status, 38, Game.HEIGHT-28);
+		}
 	}
 	
 	public float getX()
@@ -167,7 +187,12 @@ public class Monkey
 		return new Rectangle(x, y, width, height);
 	}
 
-	public String getColor()
+	public String getName()
+	{
+		return this.name;
+	}
+	
+	public Color getColor()
 	{
 		return this.color;
 	}

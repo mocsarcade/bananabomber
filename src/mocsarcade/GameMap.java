@@ -17,7 +17,7 @@ public class GameMap
 	private static int TILEY_HEIGHT = Game.HEIGHT / Tile.HEIGHT;
 	
 	public Tile[][] tiles = new Tile[GameMap.TILEY_WIDTH][GameMap.TILEY_HEIGHT];
-	public LinkedList<Monkey> monkies = new LinkedList<Monkey>();
+	public LinkedList<Monkey> monkeys = new LinkedList<Monkey>();
 	
 	public GameMap(Game game)
 	{
@@ -40,8 +40,8 @@ public class GameMap
 			}
 		}
 
-		this.monkies.add(new Monkey(this, "red"));
-		this.monkies.add(new Monkey(this, "green"));
+		this.monkeys.add(new Monkey(this, "red"));
+		this.monkeys.add(new Monkey(this, "green"));
 	}
 	
 	public void update(Input input, int delta)
@@ -158,11 +158,11 @@ public class GameMap
 	
 	public LinkedList<Monkey> getMonkies()
 	{
-		return this.monkies;
+		return this.monkeys;
 	}
 
 	public void removeMonkey(Monkey monkey)
 	{
-		this.monkies.remove(monkey);
+		this.monkeys.remove(monkey);
 	}
 }
