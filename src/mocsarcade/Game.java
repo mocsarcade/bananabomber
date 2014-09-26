@@ -4,6 +4,7 @@ import java.util.Random;
 
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -43,18 +44,15 @@ public class Game extends BasicGame
 			exception.printStackTrace();
 		}
 		
-		this.initiate();
+		Game.music.playAsMusic(1f, 1f, true);
+		this.gamemap = new GameMap(this);
 	}
 	
 	public GameMap gamemap;
-	
-	public void initiate()
-	{
-		Game.music.stop();
-		Game.music.playAsMusic(1f, 1f, true);
-		
-		this.gamemap = new GameMap(this);
-	}
+
+	public int gameoverTimer;
+	public Color gameoverColor;
+	public String gameoverMessage;
 	
 	public void update(GameContainer container, int delta) throws SlickException
 	{
@@ -66,11 +64,57 @@ public class Game extends BasicGame
 		}
 		
 		this.gamemap.update(input, delta);
+		
+		if(this.gameoverMessage != null)
+		{
+			this.gameoverTimer -= delta;
+			
+			if(this.gameoverTimer <= 0)
+			{
+				Game.music.stop();
+				Game.music.playAsMusic(1f, 1f, true);
+				
+				this.gamemap = new GameMap(this);
+				
+				this.gameoverMessage = null;
+			}
+		}
+		else
+		{
+			if(this.gamemap.monkies.size() == 0)
+			{
+				this.gameoverTimer = 3 * 1000;
+				this.gameoverColor = Color.white;
+				this.gameoverMessage = "Everyone loses! :(";
+			}
+			else if(this.gamemap.monkies.size() == 1)
+			{
+				this.gameoverTimer = 3 * 1000;
+				this.gameoverMessage = this.gamemap.monkies.get(0).getColor() + " wins! :D";
+				
+				if(this.gamemap.monkies.get(0).getColor() == "red")
+				{
+					this.gameoverColor = Color.red;
+				}
+				else if(this.gamemap.monkies.get(0).getColor() == "green")
+				{
+					this.gameoverColor = Color.green;
+				}
+			}
+		}
 	}
 	
 	public void render(GameContainer container, Graphics graphics) throws SlickException
 	{
 		this.gamemap.render(graphics);
+		
+		if(this.gameoverMessage != null)
+		{
+			graphics.setColor(this.gameoverColor);
+			graphics.fillRect(0, (Game.HEIGHT / 2) - 32, Game.WIDTH, 64);
+			graphics.setColor(Color.black);
+			graphics.drawString(this.gameoverMessage, 48, (Game.HEIGHT / 2) - 8);
+		}
 	}
 	
 	public static void main(String[] args) throws SlickException

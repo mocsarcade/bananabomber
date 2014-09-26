@@ -16,11 +16,8 @@ public class GameMap
 	private static int TILEY_WIDTH = Game.WIDTH / Tile.WIDTH;
 	private static int TILEY_HEIGHT = Game.HEIGHT / Tile.HEIGHT;
 	
-	private Tile[][] tiles = new Tile[GameMap.TILEY_WIDTH][GameMap.TILEY_HEIGHT];
-	private LinkedList<Monkey> monkies = new LinkedList<Monkey>();
-
-	private int gameoverTimer;
-	private String gameoverMessage;
+	public Tile[][] tiles = new Tile[GameMap.TILEY_WIDTH][GameMap.TILEY_HEIGHT];
+	public LinkedList<Monkey> monkies = new LinkedList<Monkey>();
 	
 	public GameMap(Game game)
 	{
@@ -61,29 +58,6 @@ public class GameMap
 		{
 			monkey.update(input, delta);
 		}
-		
-		if(this.gameoverMessage != null)
-		{
-			this.gameoverTimer -= delta;
-			
-			if(this.gameoverTimer <= 0)
-			{
-				this.game.initiate();
-			}
-		}
-		else
-		{
-			if(this.monkies.size() == 0)
-			{
-				this.gameoverTimer = 3 * 1000;
-				this.gameoverMessage = "Everyone loses!";
-			}
-			else if(this.monkies.size() == 1)
-			{
-				this.gameoverTimer = 3 * 1000;
-				this.gameoverMessage = this.monkies.get(0).getColor() + " wins!";
-			}
-		}
 	}
 	
 	public void render(Graphics graphics)
@@ -99,12 +73,6 @@ public class GameMap
 		for(Monkey monkey : this.getMonkies())
 		{
 			monkey.render(graphics);
-		}
-		
-		if(this.gameoverMessage != null)
-		{
-			graphics.setColor(Color.white);
-			graphics.drawString(this.gameoverMessage, 48, Game.HEIGHT - 28);
 		}
 	}
 	
