@@ -6,6 +6,7 @@ import java.util.Random;
 
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.openal.Audio;
 
 public class Banana
 {
@@ -43,6 +44,8 @@ public class Banana
 				{
 					monkey.bombIntensity += 1;
 				}
+				
+				Banana.sounds.get("powerup").playAsSoundEffect(1f, 1f, false);
 			}
 		}
 	}
@@ -56,4 +59,5 @@ public class Banana
 	}
 	
 	public static HashMap<String, Image> images = new HashMap<String, Image>();
+	public static HashMap<String, Audio> sounds = new HashMap<String, Audio>();
 }
