@@ -44,13 +44,15 @@ public class Game extends BasicGame
 		}
 		
 		this.initiate();
-		Game.music.playAsMusic(1f, 1f, true);
 	}
 	
 	public GameMap gamemap;
 	
 	public void initiate()
 	{
+		Game.music.stop();
+		Game.music.playAsMusic(1f, 1f, true);
+		
 		this.gamemap = new GameMap(this);
 	}
 	

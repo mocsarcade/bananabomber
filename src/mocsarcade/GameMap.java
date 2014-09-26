@@ -65,7 +65,6 @@ public class GameMap
 		if(this.gameoverMessage != null)
 		{
 			this.gameoverTimer -= delta;
-			System.out.println(gameoverMessage);
 			
 			if(this.gameoverTimer <= 0)
 			{
