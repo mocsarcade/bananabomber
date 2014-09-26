@@ -159,6 +159,11 @@ public abstract class Tile
 					this.bomb = null;
 				}
 				
+				if(this.powerup != null)
+				{
+					this.powerup = null;
+				}
+				
 				if(this.crate != null)
 				{
 					this.crate = null;
