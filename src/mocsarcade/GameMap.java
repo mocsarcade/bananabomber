@@ -13,7 +13,7 @@ public class GameMap
 {
 	private Game game;
 	
-	private static int TILEY_WIDTH = Game.WIDTH / Tile.WIDTH;
+	private static int TILEY_WIDTH = Game.WIDTH / Tile.WIDTH + 1;
 	private static int TILEY_HEIGHT = Game.HEIGHT / Tile.HEIGHT;
 	
 	public Tile[][] tiles = new Tile[GameMap.TILEY_WIDTH][GameMap.TILEY_HEIGHT];
@@ -62,6 +62,7 @@ public class GameMap
 	
 	public void render(Graphics graphics)
 	{
+		graphics.setBackground(Color.darkGray);
 		for(int tx = 0; tx < GameMap.TILEY_WIDTH; tx++)
 		{
 			for(int ty = 0; ty < GameMap.TILEY_HEIGHT; ty++)

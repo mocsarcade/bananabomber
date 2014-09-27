@@ -18,7 +18,7 @@ public class Monkey
 	private GameMap gamemap;
 	
 	private float acceleration = 0.1f;
-	private float deacceleration = 0.0035f;
+	private float deacceleration = 0.005f;
 	
 	private Image image;
 	private String name;
@@ -83,22 +83,22 @@ public class Monkey
 		
 		if(this.dx < 0)
 		{
-			this.dx += this.deacceleration;
+			this.dx += this.deacceleration * delta;
 			if(this.dx > 0) {this.dx = 0;}
 		}
-		else if(this.dx > 0)
+		if(this.dx > 0)
 		{
-			this.dx -= this.deacceleration;
+			this.dx -= this.deacceleration * delta;
 			if(this.dx < 0) {this.dx = 0;}
 		}
 		if(this.dy < 0)
 		{
-			this.dy += this.deacceleration;
+			this.dy += this.deacceleration * delta;
 			if(this.dy > 0) {this.dy = 0;}
 		}
-		else if(this.dy > 0)
+		if(this.dy > 0)
 		{
-			this.dy -= this.deacceleration;
+			this.dy -= this.deacceleration * delta;
 			if(this.dy < 0) {this.dy = 0;}
 		}
 		
@@ -119,8 +119,8 @@ public class Monkey
 
 	public void render(Graphics graphics)
 	{
-		float x = this.getX() - (this.getWidth() / 2);
-		float y = this.getY() - (this.getHeight() / 2);
+		float x = this.getX() - (this.getWidth() / 2) - (Tile.WIDTH / 2);
+		float y = this.getY() - (this.getHeight() / 2) + (Tile.HEIGHT / 2);
 		
 		this.image.draw(x, y);
 		
@@ -132,7 +132,7 @@ public class Monkey
 		}
 		else if(this.name == "green")
 		{
-			graphics.drawString(status, 38, Game.HEIGHT-28);
+			graphics.drawString(status, 38, 28);
 		}
 	}
 	

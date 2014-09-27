@@ -18,8 +18,8 @@ public class Crate
 	
 	public void render(Graphics graphics)
 	{
-		float x = this.tile.getX() + 5;
-		float y = this.tile.getY() + 5;
+		float x = this.tile.getX() + 5 - (Tile.WIDTH / 2);
+		float y = this.tile.getY() + 5 + (Tile.HEIGHT / 2);
 		float width = this.tile.getWidth() - 10;
 		float height = this.tile.getHeight() - 10;
 		

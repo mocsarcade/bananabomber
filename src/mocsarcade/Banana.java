@@ -52,8 +52,8 @@ public class Banana
 
 	public void render(Graphics graphics)
 	{
-		float x = this.tile.getX();
-		float y = this.tile.getY();
+		float x = this.tile.getX() - (Tile.WIDTH / 2);
+		float y = this.tile.getY() + (Tile.HEIGHT / 2);
 		
 		Banana.images.get(this.type).draw(x, y);
 	}

@@ -21,8 +21,8 @@ public class Explosion
 	
 	public void render(Graphics graphics)
 	{
-		float x = this.tile.getX();
-		float y = this.tile.getY();
+		float x = this.tile.getX() - (Tile.WIDTH / 2);
+		float y = this.tile.getY() + (Tile.HEIGHT / 2);
 		float width = this.tile.getWidth();
 		float height = this.tile.getHeight();
 		Color color = new Color(255, 0, 0, this.timer);

@@ -55,8 +55,8 @@ public abstract class Tile
 	
 	public void render(Graphics graphics)
 	{
-		float x = this.getX();
-		float y = this.getY();
+		float x = this.getX() - (Tile.WIDTH / 2);
+		float y = this.getY() + (Tile.HEIGHT / 2);
 		float width = this.getWidth();
 		float height = this.getHeight();
 		

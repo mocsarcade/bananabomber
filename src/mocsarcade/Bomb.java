@@ -36,8 +36,8 @@ public class Bomb
 	
 	public void render(Graphics graphics)
 	{
-		float x = this.tile.getX() + this.tile.getWidth() * 0.125f;
-		float y = this.tile.getY() + this.tile.getHeight() * 0.125f;
+		float x = this.tile.getX() + this.tile.getWidth() * 0.125f - (Tile.WIDTH / 2);
+		float y = this.tile.getY() + this.tile.getHeight() * 0.125f + (Tile.HEIGHT / 2);
 		float width = this.tile.getWidth() * 0.75f;
 		float height = this.tile.getHeight() * 0.75f;
 		Color color = new Color(this.timer % 255, 0, 0);
