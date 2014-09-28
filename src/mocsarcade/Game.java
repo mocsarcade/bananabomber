@@ -44,7 +44,7 @@ public class Game extends BasicGame
 			exception.printStackTrace();
 		}
 		
-		Game.music.playAsMusic(1f, 1f, true);
+		//Game.music.playAsMusic(1f, 1f, true);
 		this.gamemap = new GameMap(this);
 	}
 	

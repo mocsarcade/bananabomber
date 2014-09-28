@@ -18,7 +18,7 @@ public class Monkey
 	private GameMap gamemap;
 	
 	private float acceleration = 0.1f;
-	private float deacceleration = 0.005f;
+	private float deacceleration = 0.0025f;
 	
 	private Image image;
 	private String name;
@@ -31,12 +31,13 @@ public class Monkey
 	public Monkey(GameMap gamemap, String name)
 	{
 		this.gamemap = gamemap;
+		this.name = name;
+		
 		this.x = (Game.randomness.nextInt(9) + 1) * Tile.WIDTH * 2 - (Tile.WIDTH * 0.5f);
 		this.y = (Game.randomness.nextInt(7) + 1) * Tile.WIDTH * 2 - (Tile.WIDTH * 0.5f);
 		this.gamemap.getTile(this.x, this.y).explode(Direction.ALL, 2, false);
 		this.gamemap.getTile(this.x, this.y).explode(Direction.ALL, 2, false);
 		
-		this.name = name;
 		if(this.name == "red")
 		{
 			this.color = Color.red;
@@ -45,6 +46,7 @@ public class Monkey
 		{
 			this.color = Color.green;
 		}
+		
 		this.image = Monkey.images.get(this.name);
 		this.keyscheme = new KeyScheme(this.name);
 	}
