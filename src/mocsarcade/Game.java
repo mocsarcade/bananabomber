@@ -100,7 +100,7 @@ public class Game extends BasicGame
 	
 	public static final int WIDTH = 800;
 	public static final int HEIGHT = 600;
-	public static final String VERSION = "v0.0.2";
+	public static final String VERSION = "v0.1.0";
 	public static final String TITLE = "Bananabomber";
 	
 	public static Random randomness = new Random();
