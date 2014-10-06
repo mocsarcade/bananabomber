@@ -18,13 +18,13 @@ public class Crate
 	
 	public void render(Graphics graphics)
 	{
-		float x = this.tile.getX() + 5 - (Tile.WIDTH / 2);
-		float y = this.tile.getY() + 5 + (Tile.HEIGHT / 2);
-		float width = this.tile.getWidth() - 10;
-		float height = this.tile.getHeight() - 10;
+		float x = this.tile.getX() + 1 - (Tile.WIDTH / 2);
+		float y = this.tile.getY() + 1 + (Tile.HEIGHT / 2);
+		float width = this.tile.getWidth() - 2;
+		float height = this.tile.getHeight() - 2;
 		
 		graphics.setColor(this.color);
-		graphics.fillRoundRect(x, y, width, height, 5);
+		graphics.fillRoundRect(x, y, width, height, 8);
 	}
 	
 	private static Color[] colors = {

@@ -62,7 +62,7 @@ public class GameMap
 	
 	public void render(Graphics graphics)
 	{
-		graphics.setBackground(Color.darkGray);
+		graphics.setBackground(new Color(80, 80, 80));
 		for(int tx = 0; tx < GameMap.TILEY_WIDTH; tx++)
 		{
 			for(int ty = 0; ty < GameMap.TILEY_HEIGHT; ty++)

@@ -1,5 +1,7 @@
 package mocsarcade;
 
+import java.util.Random;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
@@ -9,7 +11,7 @@ public class WallTile extends Tile
 	{
 		super(gamemap, tx, ty);
 		
-		this.color = Color.darkGray;
+		this.color = new Color(80, 80, 80);
 	}
 
 	public boolean canMoveHere()
