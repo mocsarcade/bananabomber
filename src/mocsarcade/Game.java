@@ -24,8 +24,8 @@ public class Game extends BasicGame
 	
 	public void init(GameContainer container)
 	{
-		Game.music.loop();
 		this.gamemap = new GameMap(this);
+		Game.music.loop();
 	}
 	
 	public GameMap gamemap;
@@ -92,8 +92,13 @@ public class Game extends BasicGame
 	{
 		AppGameContainer container = new AppGameContainer(new Game());
 		container.setDisplayMode(Game.WIDTH, Game.HEIGHT, false);
-		//container.setTargetFrameRate(60);
-		//container.setFullscreen(true);
+		
+		if(args.length > 0 && args[0] == "deployment")
+		{
+			container.setTargetFrameRate(60);
+			container.setFullscreen(true);
+		}
+		
 		container.setShowFPS(false);
 		container.start();
 	}
