@@ -7,11 +7,14 @@ import java.util.Random;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.openal.Audio;
+import org.newdawn.slick.openal.AudioLoader;
+import org.newdawn.slick.util.ResourceLoader;
 
 public class Banana
 {
 	private Tile tile;
 	private String type;
+	private Image image;
 	
 	public Banana(Tile tile)
 	{
@@ -20,10 +23,12 @@ public class Banana
 		if(Game.randomness.nextBoolean())
 		{
 			this.type = "intensity";
+			this.image = Game.assets.getImage("./res/intensity.banana.png");
 		}
 		else
 		{
 			this.type = "capacity";
+			this.image = Game.assets.getImage("./res/capacity.banana.png");
 		}
 	}
 	
@@ -45,7 +50,7 @@ public class Banana
 					monkey.bombIntensity += 1;
 				}
 				
-				Banana.sounds.get("powerup").playAsSoundEffect(1f, 1f, false);
+				Game.assets.getSound("./res/banana.powerup.wav").play();
 			}
 		}
 	}
@@ -54,8 +59,8 @@ public class Banana
 	{
 		float x = this.tile.getX() - (Tile.WIDTH / 2);
 		float y = this.tile.getY() + (Tile.HEIGHT / 2);
-		
-		Banana.images.get(this.type).draw(x, y);
+
+		this.image.draw(x, y);
 	}
 	
 	public static HashMap<String, Image> images = new HashMap<String, Image>();

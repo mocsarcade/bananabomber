@@ -9,6 +9,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.openal.Audio;
 import org.newdawn.slick.openal.AudioLoader;
@@ -16,8 +17,6 @@ import org.newdawn.slick.util.ResourceLoader;
 
 public class Game extends BasicGame
 {
-	public static Audio music;
-	
 	public Game()
 	{
 		super(Game.TITLE + " " + Game.VERSION);
@@ -25,26 +24,7 @@ public class Game extends BasicGame
 	
 	public void init(GameContainer container)
 	{
-		try
-		{
-			Banana.images.put("intensity", new Image("./res/intensity.banana.png"));
-			Banana.images.put("capacity", new Image("./res/capacity.banana.png"));
-			Monkey.images.put("green", new Image("./res/green.monkey.png"));
-			Monkey.images.put("red", new Image("./res/red.monkey.png"));
-			
-			Game.music = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("./res/music.wav"));
-			Bomb.sounds.put("drop", AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("./res/bomb.drop.wav")));
-			Bomb.sounds.put("explosion 1", AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("./res/bomb.explosion.1.wav")));
-			Bomb.sounds.put("explosion 2", AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("./res/bomb.explosion.2.wav")));
-			Bomb.sounds.put("explosion 3", AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("./res/bomb.explosion.3.wav")));
-			Banana.sounds.put("powerup",  AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("./res/banana.powerup.wav")));
-		}
-		catch (Exception exception)
-		{
-			exception.printStackTrace();
-		}
-		
-		//Game.music.playAsMusic(1f, 1f, true);
+		Game.music.loop();
 		this.gamemap = new GameMap(this);
 	}
 	
@@ -71,8 +51,7 @@ public class Game extends BasicGame
 			
 			if(this.gameoverTimer <= 0)
 			{
-				Game.music.stop();
-				Game.music.playAsMusic(1f, 1f, true);
+				Game.music.loop();
 				
 				this.gamemap = new GameMap(this);
 				
@@ -125,4 +104,7 @@ public class Game extends BasicGame
 	public static final String TITLE = "Bananabomber";
 	
 	public static Random randomness = new Random();
+	public static AssetManager assets = new AssetManager();
+	
+	public static Music music = Game.assets.getMusic("./res/music.wav");
 }

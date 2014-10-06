@@ -41,14 +41,15 @@ public class Monkey
 		if(this.name == "red")
 		{
 			this.color = Color.red;
+			this.keyscheme = new KeyScheme("red");
+			this.image = Game.assets.getImage("./res/red.monkey.png");
 		}
 		else if(this.name == "green")
 		{
 			this.color = Color.green;
+			this.keyscheme = new KeyScheme("green");
+			this.image = Game.assets.getImage("./res/green.monkey.png");
 		}
-		
-		this.image = Monkey.images.get(this.name);
-		this.keyscheme = new KeyScheme(this.name);
 	}
 	
 	public void update(Input input, int delta)
