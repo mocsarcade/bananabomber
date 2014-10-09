@@ -18,7 +18,7 @@ public class Monkey
 	private GameMap gamemap;
 	
 	private float acceleration = 0.1f;
-	private float deacceleration = 0.0025f;
+	private float deacceleration = 0.0075f;
 	
 	private Image image;
 	private String name;
