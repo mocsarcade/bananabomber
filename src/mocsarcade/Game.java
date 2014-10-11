@@ -93,7 +93,7 @@ public class Game extends BasicGame
 		AppGameContainer container = new AppGameContainer(new Game());
 		container.setDisplayMode(Game.WIDTH, Game.HEIGHT, false);
 		
-		if(args.length > 0 && args[0] == "deployment")
+		//if(args.length > 0 && args[0] == "development")
 		{
 			container.setTargetFrameRate(60);
 			container.setFullscreen(true);
