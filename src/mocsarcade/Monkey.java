@@ -2,13 +2,11 @@ package mocsarcade;
 
 import java.awt.Rectangle;
 import java.util.HashMap;
-import java.util.Random;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.SlickException;
 
 public class Monkey
 {

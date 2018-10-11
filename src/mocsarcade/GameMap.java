@@ -1,17 +1,15 @@
 package mocsarcade;
 
 import java.awt.Rectangle;
-import java.util.ArrayList;
 import java.util.LinkedList;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
-import org.newdawn.slick.SlickException;
 
 public class GameMap
 {
-	private Game game;
+	//private Game game;
 	
 	private static int TILEY_WIDTH = Game.WIDTH / Tile.WIDTH + 1;
 	private static int TILEY_HEIGHT = Game.HEIGHT / Tile.HEIGHT;
@@ -21,7 +19,7 @@ public class GameMap
 	
 	public GameMap(Game game)
 	{
-		this.game = game;
+		//this.game = game;
 		
 		for(int tx = 0; tx < GameMap.TILEY_WIDTH; tx++)
 		{

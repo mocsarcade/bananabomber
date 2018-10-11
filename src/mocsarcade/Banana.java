@@ -1,14 +1,9 @@
 package mocsarcade;
-
-import java.awt.Rectangle;
 import java.util.HashMap;
-import java.util.Random;
 
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.openal.Audio;
-import org.newdawn.slick.openal.AudioLoader;
-import org.newdawn.slick.util.ResourceLoader;
 
 public class Banana
 {
