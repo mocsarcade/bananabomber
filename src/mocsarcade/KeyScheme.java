@@ -1,6 +1,8 @@
 package mocsarcade;
 
 import org.newdawn.slick.Input;
+import java.io.*;
+import java.util.Properties;
 
 public class KeyScheme
 {
@@ -12,21 +14,20 @@ public class KeyScheme
 	
 	public KeyScheme(String color)
 	{
-		if(color == "red")
-		{
-			this.moveNorth = Input.KEY_UP;
-			this.moveSouth = Input.KEY_DOWN;
-			this.moveWest = Input.KEY_LEFT;
-			this.moveEast = Input.KEY_RIGHT;
-			this.dropBomb = Input.KEY_SPACE;
-		}
-		else if(color == "green")
-		{
-			this.moveNorth = Input.KEY_W;
-			this.moveSouth = Input.KEY_S;
-			this.moveWest = Input.KEY_A;
-			this.moveEast = Input.KEY_D;
-			this.dropBomb = Input.KEY_E;
-		}
+	    try{
+	    	//Load ini file
+	        Properties p = new Properties();
+	        p.load(new FileInputStream("controls.ini"));
+	        //Each key of the file has a string for a key to press. Map to them
+			this.moveNorth = Utility.convertChar(p.getProperty(color + "up"));
+			this.moveSouth = Utility.convertChar(p.getProperty(color + "down"));
+			this.moveWest = Utility.convertChar(p.getProperty(color + "left"));
+			this.moveEast = Utility.convertChar(p.getProperty(color + "right"));
+			this.dropBomb = Utility.convertChar(p.getProperty(color + "bomb"));
+	    }
+	    catch (Exception e) {
+	      System.out.println(e);
+	    }
+	    
 	}
 }

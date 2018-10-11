@@ -101,6 +101,7 @@ public class Game extends BasicGame
 		
 		container.setShowFPS(false);
 		container.start();
+		
 	}
 	
 	public static final int WIDTH = 800;
