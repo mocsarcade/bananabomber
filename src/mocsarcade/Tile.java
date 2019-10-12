@@ -144,11 +144,12 @@ public abstract class Tile
 				{
 					this.explosion = new Explosion(this, power);
 					
-					for(Monkey monkey : this.gamemap.getMonkies())
+					for(int i=this.gamemap.getMonkies().size()-1; i>=0; i--)
 					{
-						if(monkey.getHitbox().intersects(this.getRectangle()))
+						Monkey curMonkey = this.gamemap.getMonkies().get(i);
+						if(curMonkey.getHitbox().intersects(this.getRectangle()))
 						{
-							this.gamemap.removeMonkey(monkey);
+							this.gamemap.removeMonkey(curMonkey);
 						}
 					}
 				}
